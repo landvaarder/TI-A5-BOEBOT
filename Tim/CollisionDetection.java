@@ -5,7 +5,6 @@ import stamp.core.*;
 *@version = 1.0
 */
 
-
 public class CollisionDetection {
 
 //private IRSensor sensorLeft;
@@ -19,11 +18,12 @@ public class CollisionDetection {
   *@param = pins for sensors
   */
 
-  public CollisionDetection(int pinWhiskerLeft, int pinWhiskerRight){
+  public CollisionDetection(){
    //IRSensor sensorLeft = new IRSensor(pinIRLeft);
    //IRSensor sensorRight = new IRSensor(pinIRRight);
-    CollisionSensor whiskerLeft = new CollisionSensor(pinWhiskerLeft);
-    CollisionSensor whiskerRight = new CollisionSensor(pinWhiskerRight);
+    this.whiskerLeft = new CollisionSensor(CPU.pin2);
+    this.whiskerRight = new CollisionSensor(CPU.pin3);
+    this.move = 0;
   }
 
   public void collisionListener(){
@@ -34,7 +34,7 @@ public class CollisionDetection {
      move = 1;   //Go bit backwards then left
      } else if (!whiskerLeft.getCollision() && whiskerRight.getCollision()) {
      move = 2;   //Go bit backwards then right
-     } else if (!whiskerLeft.getCollision() && whiskerRight.getCollision())  {
+     } else if (!whiskerLeft.getCollision() && !whiskerRight.getCollision())  {
      move = 3;   //Backwards and half turn
      }
   }
@@ -42,12 +42,5 @@ public class CollisionDetection {
   public int getMove(){
    return move;
   }
-
-  public void sensorListener(){
-
-  }
-
-
-
 
  }

@@ -6,7 +6,7 @@ public class CollisionSensor {
   private int pin;
 
   public CollisionSensor(int pin){
-  isPositive = true;
+  this.isPositive = true;
   this.pin = pin;
   }
 
