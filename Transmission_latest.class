@@ -1,0 +1,64 @@
+import stamp.core.*;     
+
+public class Transmission
+{
+
+private int speed;
+
+//* Bot rijdt vooruit
+public static void forward()
+{
+	motorL.setSpeed(23);
+	motorR.setSpeed(23);
+}
+
+//* Bot rijdt achteruit
+public static void backwards()
+{
+	motorL.setSpeed(-23);
+	motorR.setSpeed(-23);
+}
+
+//* Bot stopt met rijden
+public static void stop()
+{
+	motorL.setSpeed(0);
+	motorR.setSpeed(0);
+}
+
+//* Bot maakt 'angle' graden draai 
+public static void pivot(int angle)
+{
+	if (angle > 180)
+	{
+		turnRight();
+		stop();
+	}
+	else
+	{
+		turnLeft();
+		stop();
+	}
+}
+
+//* Bot maakt 90 graden draai naar links
+public static void turnLeft()
+{
+	motorL.setSpeed(-23);
+	motorR.setSpeed(23);
+}
+
+//* Bot maakt 90 graden draai naar rechts
+public static void turnRight()
+{
+	motorL.setSpeed(23);
+	motorR.setSpeed(-23);	
+	
+}
+//* Bot zal op de aangegeven snelheid rijden
+public static void setSpeed(int speed)
+{
+	servoMotor.setSpeed(speed);
+}
+
+}
