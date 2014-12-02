@@ -1,58 +1,67 @@
 import stamp.core.*;
 
-/**
- * Put a one line description of your class here.
- * <p>
- * This comment should contain a description of the class. What it
- * is for, what it does and how to use it.
- *
- * You should rename the class and then save it in a file with
- * exactly the same name as the class.
- *
- * @version 1.0 Date
- * @author Your Name Here
- */
 
 public class Application {
 
-  private CollisionDetection collision;
-
-  public Application() {
-  collision = new CollisionDetection(5,6);
+  public static void main() {
+  Application application = new Application();
+  while(true){
+  application.collisionPrevention();
+  }
   }
 
-  public void main() {
-   while(true) {
+  private CollisionDetection detection;
+  private Transmission transmission;
+  private int ledPin1 = CPU.pin5;
+  private int ledPin2 = CPU.pin6;
+
+
+  public Application(){
+  this.detection = new CollisionDetection();
+  this.transmission = new Transmission();
+  }
+
+  public void collisionPrevention() {
    int collisionCode;
-   collisionCode = collision.getCollisionCode();
-   switch(collisionCode/10) {
+   collisionCode = detection.getCollisionCode();
+   switch(collisionCode) {
     case 0:
-     switch(collisionCode%10) {
-      case 0:
-       // straight forward
-       break;
-      case 1:
-       //Go bit backwards then left
-       break;
-      case 2:
-       //Go bit backwards then right
-       break;
-      case 3:
-       //Backwards and half turn
-       break;
-     }
-     break;
-    case 1:
-     // turn around
-     break;
-    case 2:
-     //Go bit backwards and then turn left
-     break;
-    case 3:
      //Go bit backwards and than turn right
+     transmission.stop();
+     transmission.backward();
+     CPU.delay(1000);
+     transmission.turnRight(180);
+     break;
+    case 30:
+     // straight forward
+     transmission.forward();
+     System.out.println("0");
+     break;
+    case 31:
+     //Go bit backwards then left
+     transmission.stop();
+     transmission.backward();
+     CPU.delay(1000);
+     transmission.turnLeft(90);
+     System.out.println("1");
+     break;
+    case 32:
+     //Go bit backwards then right
+     transmission.stop();
+     transmission.backward();
+     CPU.delay(1000);
+     transmission.turnRight(90);
+     System.out.println("2");
+      break;
+    case 33:
+     //Backwards and half turn
+     transmission.stop();
+     transmission.backward();
+     CPU.delay(1000);
+     transmission.turnRight(90);
+     transmission.turnRight(90);
      break;
     }
    }
   }
- }
-
+  
