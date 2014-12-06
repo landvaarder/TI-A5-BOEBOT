@@ -10,10 +10,10 @@ import stamp.core.PWM;
 
 public class IREmitter {
 
-  PWM ledBeam;
+  private PWM ledBeam;
 
-  public IREmitter(int IRLedPin) {
-    ledBeam = new PWM(CPU.pins[IRLedPin],1,2);
+  public IREmitter(int pin) {
+    this.ledBeam = new PWM(pin,1,2);
   }
 
   public void startBeam() {

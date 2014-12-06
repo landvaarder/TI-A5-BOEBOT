@@ -1,4 +1,4 @@
-import stamp.core.CPU;   
+import stamp.core.CPU;
 /**
  * IRReciever class which has a method which checks if the IR-reciever reciever a IR-signal.
  *
@@ -7,13 +7,13 @@ import stamp.core.CPU;
  */
 public class IRReciever {
 
-  int IRRecieverPin;
+  private int IRRecieverPin;
 
-  public IRReciever(int IRRecieverPin) {
-   this.IRRecieverPin = IRRecieverPin;
+  public IRReciever(int pin) {
+   this.IRRecieverPin = pin;
   }
 
   public boolean checkSignal() {
-   return CPU.readPin(CPU.pins[IRRecieverPin]);
+   return CPU.readPin(IRRecieverPin);
   }
 }

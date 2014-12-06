@@ -1,62 +1,68 @@
 import stamp.core.*;
 
-/**
+/*
 *@author = Tim Schijvenaars
 *@version = 1.0
+* pin 3 = right emitter
+* pin 2 = left emitter (green wire))
+*
 */
 
 public class CollisionDetection {
 
-  private IRSensor irSensorLeft;
-  private IRSensor irSensorRight;
+  private IRSensor sensorLeft;
+  private IRSensor sensorRight;
   private CollisionSensor whiskerLeft;
   private CollisionSensor whiskerRight;
-  private int move;
+  private int collisionCode;
 
-  /*
-  *Constructor
-  *@param = pins for sensors
-  */
-
-  public CollisionDetection(int pinWhiskerLeft, int pinWhiskerRight){
-    CollisionSensor whiskerLeft = new CollisionSensor(pinWhiskerLeft);
-    CollisionSensor whiskerRight = new CollisionSensor(pinWhiskerRight);
-    irSensorLeft = new IRSensor(1,2); //@param emitter pin, reciever pin
-    irSensorRight = new IRSensor(3,4); //@param emitter pin, reciever pin
+  public CollisionDetection(){
+    this.sensorLeft = new IRSensor(CPU.pin2, CPU.pin0);
+    this.sensorRight = new IRSensor(CPU.pin3, CPU.pin1);
+    this.whiskerLeft = new CollisionSensor(CPU.pin9);
+    this.whiskerRight = new CollisionSensor(CPU.pin11);
   }
 
-  private int collisionListener() {
-
-     if(whiskerLeft.getCollision()&& whiskerRight.getCollision()){
-     return 0;   //Straight forward
-     } else if (whiskerLeft.getCollision() && !whiskerRight.getCollision()) {
-     return 1;   //Go bit backwards then left
-     } else if (!whiskerLeft.getCollision() && whiskerRight.getCollision()) {
-     return 2;   //Go bit backwards then right
-     } else {
-     return 3;   //Backwards and half turn
+  private void collisionListener(){
+   if(collisionCode == 0) {
+     boolean left = whiskerLeft.getCollision();
+     CPU.delay(2000);
+     boolean right = whiskerRight.getCollision();
+     if(left && right ) {
+     collisionCode += 0;   //Straight forward
      }
+     else if (left && !right) {
+     collisionCode += 3;   //Go bit backwards then left
+     }
+     else if (!left && right) {
+     collisionCode += 4;   //Go bit backwards then right
+     }
+     else if (!left && !right)  {
+     collisionCode += 5;   //Backwards and half turn
+     }
+   }
   }
 
-  private int irSensorListener(){
-   boolean irLeft = irSensorLeft.getIRCollision();
-   boolean irRight = irSensorRight.getIRCollision();
-   if( irLeft && irRight )
-    return 1; //turn around
-   else if( !irLeft && irRight)
-    return 2; //Go bit backwards and then turn left
-   else if ( irLeft && !irRight)
-    return 3; //Go bit backwards and than turn right
-   else
-    return 0; //no Collision, move forward
+  private void getIRCollision() {
+    boolean left = sensorLeft.getCollision();
+    boolean right = sensorRight.getCollision();
+    if(left) { //hole, turn around
+     collisionCode += 1;
+    }
+    else if (right) { //collision detection, turn around
+     collisionCode += 0;
+    }
+    else if(!left && !right){ //forward
+     collisionCode += 0;
+    }
   }
 
   public int getCollisionCode() {
-   int collisionCode = collisionListener();
-   collisionCode += irSensorListener()*10;
+   collisionCode = 0;
+   getIRCollision();
+   collisionListener();
+   System.out.println(collisionCode);
    return collisionCode;
   }
 
-
-
- }
+}
