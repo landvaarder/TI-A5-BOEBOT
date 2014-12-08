@@ -42,39 +42,73 @@ public class Application {
     case 5: //Whisper, turn around
      turnAroundWithStop();
      break;
-
     }
    }
 
   private void remote(int code) {
    switch(code) {
-    case 116:
+    case 116: //arrow up
      transmission.forward();
      break;
-    case 117:
+    case 117: //arrow down
      transmission.backward();
      break;
-    case 51:
+    case 51: //arrow right
      transmission.turnRight(90);
      break;
-    case 52:
+    case 52: //arrow left
+     transmission.turnLeft(90);
      break;
-    case 21:
+    case 21: //power
      transmission.stop();
      break;
-    case 16:
+    case 16: //ch+
      transmission.upSpeed();
      break;
-    case 17:
+    case 17: //ch-
      transmission.downSpeed();
      break;
-    case 5:
-     transmission.pivotRight(90);
+    case 0: //1
+     pivotLeft(90);
      break;
-    case 3:
-     transmission.pivotLeft(360);
+    case 2: //3
+     pivotRight(90);
+     break;
+    case 1: //2
+     transmission.forward();
+     break;
+    case 4: //5
+     transmission.stop();
+     break;
+    case 3: //4
+     transmission.turnLeft(90);
+     break;
+    case 5: //6
+     transmission.turnRight(90);
+     break;
+    case 7: //8
+     transmission.backward();
+     break;
 
    }
+  }
+
+  private void pivotLeft(int angle) {
+   if(transmission.getMotorDir() == 1)
+    transmission.pivotLeft(angle);
+   else if(transmission.getMotorDir() == 2)
+    transmission.pivotRight(angle);
+   else
+    transmission.pivotLeft(angle);
+  }
+
+  private void pivotRight(int angle) {
+   if(transmission.getMotorDir() == 1)
+    transmission.pivotRight(angle);
+   else if(transmission.getMotorDir() == 2)
+    transmission.pivotLeft(angle);
+   else
+    transmission.pivotRight(angle);
   }
 
   private void turnLeftWithStop() {
@@ -103,7 +137,6 @@ public class Application {
 
   private void tunrAroundWithoutStop() {
    transmission.accelerateBackward();
-   transmission.backward();
    CPU.delay(5000);
    transmission.pivotLeft(180);
    transmission.forward();

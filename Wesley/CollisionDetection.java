@@ -19,7 +19,7 @@ public class CollisionDetection {
   public CollisionDetection(){
     this.sensorLeft = new IRSensor(CPU.pin2, CPU.pin0);
     this.sensorRight = new IRSensor(CPU.pin3, CPU.pin1);
-    this.whiskerLeft = new CollisionSensor(CPU.pin9);
+    this.whiskerLeft = new CollisionSensor(CPU.pin10);
     this.whiskerRight = new CollisionSensor(CPU.pin11);
   }
 
@@ -61,7 +61,6 @@ public class CollisionDetection {
    collisionCode = 0;
    getIRCollision();
    collisionListener();
-   System.out.println(collisionCode);
    return collisionCode;
   }
 
