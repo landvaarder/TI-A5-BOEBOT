@@ -5,18 +5,26 @@ public class Application {
   private CollisionDetection detection;
   private Transmission transmission;
   private IRRemote irRemote;
+  private LineFollowerController lineFollower;
+  private boolean collisionDetection;
+  private boolean lineMode;
+  private boolean remoteMode;
 
  public Application(){
    this.detection = new CollisionDetection();
    this.transmission = new Transmission();
    this.irRemote = new IRRemote(CPU.pin0);
+   this.lineFollower = new LineFollowerController();
+   this.collisionDetection = true;
+   this.lineMode = false;
+   this.remoteMode = true;
   }
 
   public static void main() {
    Application application = new Application();
    while(true){
     int checkCollision = application.detection.getCollisionCode();
-    if(checkCollision !=0)
+    if(checkCollision !=0 && application.collisionDetection)
      application.collisionDodger(checkCollision);
     else {
      int signalCode = application.irRemote.getIRSignalCode();
@@ -34,10 +42,10 @@ public class Application {
      tunrAroundWithoutStop();
      break;
     case 3: //Whisper, go left
-     turnLeftWithStop();
+     turnAroundWithStop();
      break;
     case 4: //Whisper, go right
-     turnRightWithStop();
+     turnAroundWithStop();
      break;
     case 5: //Whisper, turn around
      turnAroundWithStop();
@@ -62,34 +70,24 @@ public class Application {
     case 21: //power
      transmission.stop();
      break;
-    case 16: //ch+
-     transmission.upSpeed();
-     break;
-    case 17: //ch-
-     transmission.downSpeed();
-     break;
-    case 0: //1
-     pivotLeft(90);
-     break;
-    case 2: //3
-     pivotRight(90);
-     break;
-    case 1: //2
+    case 88: //ch+
      transmission.forward();
      break;
-    case 4: //5
-     transmission.stop();
-     break;
-    case 3: //4
-     transmission.turnLeft(90);
-     break;
-    case 5: //6
-     transmission.turnRight(90);
-     break;
-    case 7: //8
+    case 89: //ch-
      transmission.backward();
      break;
-
+    case 19: //vol -
+     transmission.pivotLeft(90);
+     break;
+    case 18: //vol+
+     transmission.pivotRight(90);
+     break;
+    case 0: //1 - automatic mode (collisionDetection = on && remote = off)
+     collisionDetection = true;
+     break;
+    case 1: //2 - line follower mode (collisonDetection = on && remote = off)
+     collisionDetection = true;
+     break;
    }
   }
 

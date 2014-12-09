@@ -20,13 +20,13 @@ public class Transmission {
 
   public void forward() {
    motorDir = 1;
-   servoRight.setPWM(171+speed,2304);
+   servoRight.setPWM(172+speed,2304);
    servoLeft.setPWM(173-speed,2304);
   }
 
   public void backward() {
    motorDir = 2;
-   servoRight.setPWM(175-speed,2304);
+   servoRight.setPWM(174-speed,2304);
    servoLeft.setPWM(173+speed,2304);
   }
 
@@ -98,6 +98,16 @@ public class Transmission {
     CPU.delay(500);
    }
    backward();
+  }
+
+  public void driveLeft() {
+   servoRight.setPWM(173+speed,2304);
+   servoLeft.setPWM(171,2304);
+  }
+
+  public void driveRight() {
+   servoRight.setPWM(175,2304);
+   servoLeft.setPWM(173-speed,2304);
   }
 
 
