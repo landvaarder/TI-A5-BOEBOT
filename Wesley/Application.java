@@ -26,13 +26,15 @@ public class Application {
     int checkCollision = application.detection.getCollisionCode();
     if(checkCollision !=0 && application.collisionDetection)
      application.collisionDodger(checkCollision);
-    else {
+    else if(application.remoteMode && application.remoteMode) {
      int signalCode = application.irRemote.getIRSignalCode();
      if(signalCode != 999) {
       System.out.println(signalCode);
       application.remote(signalCode);
      }
     }
+    else if(application.lineMode)
+     application.lineFollowing();
    }
   }
 
@@ -84,11 +86,25 @@ public class Application {
      break;
     case 0: //1 - automatic mode (collisionDetection = on && remote = off)
      collisionDetection = true;
+     remoteMode = false;
      break;
     case 1: //2 - line follower mode (collisonDetection = on && remote = off)
      collisionDetection = true;
+     remoteMode = false;
+     lineMode = true;
      break;
    }
+  }
+
+  public void lineFollowing() {
+   //check remote button
+   int code = lineFollower.getLineFollowersCode();
+   if(code == 1) //line detected on the left turn right.
+    transmission.driveRight();
+   else if(code == 2) //line detected on the right turn left.
+    transmission.driveLeft();
+   else
+    transmission.forward();
   }
 
   private void pivotLeft(int angle) {
