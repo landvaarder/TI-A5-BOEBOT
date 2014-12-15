@@ -9,6 +9,8 @@ public class Application {
   private boolean collisionDetection;
   private boolean lineMode;
   private boolean remoteMode;
+  private int crossWayCounter;
+  private char[] directions  = { 'R', 'F', 'R', 'R' };
 
  public Application(){
    this.detection = new CollisionDetection();
@@ -18,22 +20,31 @@ public class Application {
    this.collisionDetection = true;
    this.lineMode = false;
    this.remoteMode = true;
+   this.crossWayCounter = 0;
   }
 
   public static void main() {
    Application application = new Application();
    while(true){
-    int checkCollision = application.detection.getCollisionCode();
-    if(checkCollision !=0 && application.collisionDetection)
-     application.collisionDodger(checkCollision);
-    else if(application.remoteMode && application.remoteMode) {
-     int signalCode = application.irRemote.getIRSignalCode();
-     if(signalCode != 999) {
-      System.out.println(signalCode);
-      application.remote(signalCode);
-     }
+    if(application.collisionDetection) {
+     int checkCollision = application.detection.getCollisionCode();
+     if(checkCollision !=0)
+      application.collisionDodger(checkCollision);
     }
-    else if(application.lineMode)
+
+
+    int signalCode = application.irRemote.getIRSignalCode();
+    if(signalCode != 999 && application.remoteMode) {
+     System.out.println(signalCode);
+     application.remoteListener(signalCode);
+    }
+    else if(signalCode == 21) {
+     application.remoteMode = true;
+     application.lineMode = false;
+     application.collisionDetection = false;
+    }
+
+    if(application.lineMode)
      application.lineFollowing();
    }
   }
@@ -55,7 +66,7 @@ public class Application {
     }
    }
 
-  private void remote(int code) {
+  private void remoteListener(int code) {
    switch(code) {
     case 116: //arrow up
      transmission.forward();
@@ -79,17 +90,17 @@ public class Application {
      transmission.backward();
      break;
     case 19: //vol -
-     transmission.pivotLeft(90);
+     transmission.pivot(90);
      break;
     case 18: //vol+
-     transmission.pivotRight(90);
+     transmission.pivot(270);
      break;
     case 0: //1 - automatic mode (collisionDetection = on && remote = off)
      collisionDetection = true;
      remoteMode = false;
      break;
     case 1: //2 - line follower mode (collisonDetection = on && remote = off)
-     collisionDetection = true;
+     collisionDetection = false;
      remoteMode = false;
      lineMode = true;
      break;
@@ -97,39 +108,55 @@ public class Application {
   }
 
   public void lineFollowing() {
-   //check remote button
+
    int code = lineFollower.getLineFollowersCode();
-   if(code == 1) //line detected on the left turn right.
-    transmission.driveRight();
-   else if(code == 2) //line detected on the right turn left.
-    transmission.driveLeft();
-   else
-    transmission.forward();
+   switch(code) {
+    case 1:
+     transmission.driveRight();
+     break;
+    case 2:
+     transmission.driveLeft();
+     break;
+    case 3:
+     System.out.println("3");
+     turnRight();
+     break;
+    case 4:
+     System.out.println("4");
+     turnLeft();
+     break;
+    case 5:
+     System.out.println("5");
+     driveCrossWay();
+     break;
+    case 99:
+     transmission.forward();
+   }
   }
 
-  private void pivotLeft(int angle) {
+  /*private void pivotLeft(int angle) {
    if(transmission.getMotorDir() == 1)
-    transmission.pivotLeft(angle);
+    transmission.pivotLeft(360);
    else if(transmission.getMotorDir() == 2)
     transmission.pivotRight(angle);
    else
     transmission.pivotLeft(angle);
-  }
+  }  */
 
-  private void pivotRight(int angle) {
+ /* private void pivotRight(int angle) {
    if(transmission.getMotorDir() == 1)
     transmission.pivotRight(angle);
    else if(transmission.getMotorDir() == 2)
     transmission.pivotLeft(angle);
    else
     transmission.pivotRight(angle);
-  }
+  }     */
 
   private void turnLeftWithStop() {
    transmission.slowStop();
    transmission.backward();
    CPU.delay(5000);
-   transmission.pivotLeft(90);
+   transmission.pivot(90);
    transmission.forward();
   }
 
@@ -137,7 +164,7 @@ public class Application {
    transmission.slowStop();
    transmission.backward();
    CPU.delay(5000);
-   transmission.pivotLeft(90);
+   transmission.pivot(90);
    transmission.forward();
   }
 
@@ -145,30 +172,62 @@ public class Application {
    transmission.slowStop();
    transmission.backward();
    CPU.delay(5000);
-   transmission.pivotLeft(180);
+   transmission.pivot(180);
    transmission.forward();
   }
 
   private void tunrAroundWithoutStop() {
    transmission.accelerateBackward();
    CPU.delay(5000);
-   transmission.pivotLeft(180);
+   transmission.pivot(180);
    transmission.forward();
   }
 
+  private void turnRight() {
+  while(lineFollower.getLeft())
+  transmission.driveLeft();
+  while(!lineFollower.getLeft())
+  transmission.driveLeft();
+ }
 
+ private void turnLeft() {
+  while(lineFollower.getRight())
+  transmission.driveRight();
+  while(!lineFollower.getRight())
+  transmission.driveRight();
+ }
 
+ private void linePivoLeft() {
+  while(lineFollower.getRight())
+  transmission.pivoRight();
+  while(!lineFollower.getRight())
+  transmission.pivoRight();
+ }
 
+ private void linePivoRight() {
+  while(lineFollower.getLeft())
+  transmission.pivoLeft();
+  while(!lineFollower.getLeft())
+  transmission.pivoLeft();
+ }
 
-
-
-
-
-
-
-
-
-
-
-
+ private void driveCrossWay() {
+   transmission.slowStop();
+   switch(directions[crossWayCounter]) {
+   case 'R':
+    System.out.println("r");
+    linePivoRight();
+    break;
+   case 'L':
+    System.out.println("l");
+    linePivoLeft();
+    break;
+   case 'F':
+    System.out.println("f");
+    transmission.forward();
+    CPU.delay(1000);
+    break;
+   }
+  crossWayCounter++;
+ }
 }

@@ -12,7 +12,7 @@ public class IRRemote {
  public int getIRSignalCode() {
   int buttonValue = 0;
   int bitValue = 1;
-  pulseLength = CPU.pulseIn(30000,recieverPin,false);
+  pulseLength = CPU.pulseIn(4000,recieverPin,false); //30000
   if(pulseLength == -1)
    return 999; //no pulse
   if(pulseLength > 200) {

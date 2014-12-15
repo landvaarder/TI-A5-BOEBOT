@@ -43,14 +43,6 @@ public class Transmission {
    return motorDir;
   }
 
-  public void upSpeed() {
-
-  }
-
-  public void downSpeed() {
-
-  }
-
   /** 5700 delay = 90
    ** 445*speed delay = 90 turn
    ** 4450/90 = 50 delay
@@ -68,16 +60,15 @@ public class Transmission {
   }
 
   //works:
-  public void pivotLeft(int angle) {
-   servoRight.setPWM(173-speed, 2304);
-   servoLeft.setPWM(173-speed, 2304);
-   CPU.delay((63333/1000)*angle);
-   resumeDrive();
-  }
-
-  public void pivotRight(int angle) {
-   servoRight.setPWM(173+speed, 2304);
-   servoLeft.setPWM(173+speed, 2304);
+  public void pivot(int angle) {
+   if(angle <= 180) {
+    servoRight.setPWM(173-speed, 2304);
+    servoLeft.setPWM(173-speed, 2304);
+   }
+   else if(angle > 180) {
+    servoRight.setPWM(173+speed, 2304);
+    servoLeft.setPWM(173+speed, 2304);
+   }
    CPU.delay((63333/1000)*angle);
    resumeDrive();
   }
@@ -101,14 +92,25 @@ public class Transmission {
   }
 
   public void driveLeft() {
-   servoRight.setPWM(173+speed,2304);
+   servoRight.setPWM(193,2304);
    servoLeft.setPWM(171,2304);
   }
 
   public void driveRight() {
    servoRight.setPWM(175,2304);
-   servoLeft.setPWM(173-speed,2304);
+   servoLeft.setPWM(150,2304);
   }
+
+  public void pivoLeft() {
+   servoRight.setPWM(193, 2304);
+   servoLeft.setPWM(193, 2304);
+  }
+
+  public void pivoRight() {
+   servoRight.setPWM(150, 2304);
+   servoLeft.setPWM(150, 2304);
+  }
+
 
 
 
