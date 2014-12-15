@@ -1,8 +1,9 @@
 import stamp.core.*;
 
-/**
+/*
 *@author = Tim Schijvenaars
-*@version = 2.0
+*@version = 3.0
+*
 */
 
 public class CollisionDetection {
@@ -13,59 +14,53 @@ public class CollisionDetection {
   private CollisionSensor whiskerRight;
   private int collisionCode;
 
-  /*
-  *Constructor
-  *@param = pins for sensors
-  */
-  public CollisionDetection(int leftSensorEmitterPin, int leftSensorRecieverPin,
-                            int rightSensorEmitterPin, int rightSensorRecieverPin,
-                            int leftWhiskerPin, int rightWhiskerPin){
-    this.sensorLeft = new IRSensor(leftSensorEmitterPin, leftSensorRecieverPin);
-    this.sensorRight = new IRSensor(rightSensorEmitterPin, rightSensorRecieverPin);
-    this.whiskerLeft = new CollisionSensor(leftWhiskerPin);
-    this.whiskerRight = new CollisionSensor(rightWhiskerPin);
+  public CollisionDetection(int emitterLeft, int recieverLeft,
+                            int emitterRight, int recieverRight,
+                            int whiskerLeft, int whiskerRight){
+    this.sensorLeft = new IRSensor(emitterLeft, recieverLeft);
+    this.sensorRight = new IRSensor(emitterRight, recieverRight);
+    this.whiskerLeft = new CollisionSensor(whiskerLeft);
+    this.whiskerRight = new CollisionSensor(whiskerRight);
   }
 
-  public void collisionListener(){
+  private void collisionListener(){
+   if(collisionCode == 0) {
      boolean left = whiskerLeft.getCollision();
+     CPU.delay(2000);
      boolean right = whiskerRight.getCollision();
      if(left && right ) {
-     collisionCode = 0;   //Straight forward
+     collisionCode += 0;   //Straight forward
      }
      else if (left && !right) {
-     collisionCode = 1;   //Go bit backwards then left
+     collisionCode += 3;   //Go bit backwards then left
      }
      else if (!left && right) {
-     collisionCode = 2;   //Go bit backwards then right
+     collisionCode += 4;   //Go bit backwards then right
      }
      else if (!left && !right)  {
-     collisionCode = 3;   //Backwards and half turn
+     collisionCode += 5;   //Backwards and half turn
      }
+   }
   }
 
-  public void getIRCollision() {
-    sensorLeft.runIRCollision();
-    sensorRight.runIRCollision();
+  private void getIRCollision() {
     boolean left = sensorLeft.getCollision();
     boolean right = sensorRight.getCollision();
-    if(left && right){
+    if(left) { //hole, turn around
+     collisionCode += 1;
+    }
+    else if (right) { //collision detection, turn around
      collisionCode += 0;
     }
-    else if (left && !right){
+    else if(!left && !right){ //forward
      collisionCode += 0;
-    }
-    else if (!left && right){
-     collisionCode += 0;
-    }
-    else if(!left && !right){
-     collisionCode += 30;
     }
   }
 
   public int getCollisionCode() {
    collisionCode = 0;
-   collisionListener();
    getIRCollision();
+   collisionListener();
    return collisionCode;
   }
 

@@ -7,13 +7,13 @@ import stamp.core.CPU;
  */
 public class IRReciever {
 
-  private int pin;
+  private int IRRecieverPin;
 
   public IRReciever(int pin) {
-   this.pin = pin;
+   this.IRRecieverPin = pin;
   }
 
   public boolean checkSignal() {
-   return CPU.readPin(pin);
+   return CPU.readPin(IRRecieverPin);
   }
 }

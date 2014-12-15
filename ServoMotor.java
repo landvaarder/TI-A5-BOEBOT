@@ -1,5 +1,12 @@
 import stamp.core.*;
 
+/*
+*@author = Tim Schijvenaars
+*@version = 2.0
+*
+*
+*/
+
 public class ServoMotor {
 
   private PWM motor;

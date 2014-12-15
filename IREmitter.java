@@ -3,8 +3,8 @@ import stamp.core.PWM;
 
 /**
  * IR Beamer class which has methodes to send out a beam of IR light.
- * dateFormat: mm-dd-yyyy
- * @version 2.0 12-04-2014
+ *
+ * @version 1.0 11-26-2014
  * @author Wesley
  */
 

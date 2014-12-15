@@ -1,0 +1,15 @@
+﻿Profiel 1:
+
+Boebot Wesley
+
+this.sensorLeft = new IRSensor(CPU.pin2, CPU.pin0);
+this.sensorRight = new IRSensor(CPU.pin3, CPU.pin1);
+this.whiskerLeft = new CollisionSensor(CPU.pin10);
+this.whiskerRight = new CollisionSensor(CPU.pin11);
+lineFollowerLeft = new LineFollower(CPU.pin6);
+lineFollowerRight = new LineFollower(CPU.pin5);
+lineFollowerUpperRight = new LineFollower(CPU.pin4);
+lineFollowerUpperLeft = new LineFollower(CPU.pin7);
+this.servoLeft = new ServoMotor (CPU.pin12);
+this.servoRight = new ServoMotor (CPU.pin13);
+this.irRemote = new IRRemote(CPU.pin0);  

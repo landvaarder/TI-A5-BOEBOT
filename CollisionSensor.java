@@ -1,5 +1,12 @@
 import stamp.core.*;
 
+/*
+*@author = Tim Schijvenaars
+*@version = 1.0
+*
+*
+*/
+
 public class CollisionSensor {
 
   private int pin;
