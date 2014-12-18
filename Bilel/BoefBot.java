@@ -1,24 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package boefbot;
 
 import java.io.*;
 
 
-
-/**
- *
- * @author SuperMachine
- */
 public class BoefBot {
 
-    /**
-     * @param args the command line arguments
-     */
     static mainFrame applicationFrame = new mainFrame();
         
     BoefBot()

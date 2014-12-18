@@ -1,6 +1,9 @@
 package boefbot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TaskQueue {
     
@@ -10,8 +13,7 @@ public class TaskQueue {
     //* VR: Vooruit Rechts      VL: Vooruit Links
     //* AR: Achteruit Rechts    AL: Achteruit Links
     
-    static ArrayList<String> lijstMetTaken;
-    
+    static List<Object> lijstMetTaken = new ArrayList<>();   
     
     //*
     TaskQueue (){
@@ -20,53 +22,67 @@ public class TaskQueue {
     
     public static void resetQueue()
     {
-        ArrayList<String> lijstMetTaken         = new ArrayList<>();
+        lijstMetTaken.clear();
     }
     
-    public static void add(String richting)
+    public static void add(Object richting)
     {
         lijstMetTaken.add(richting);
     }
     
-    public static String calcReverse(String richting)
+    public static void goReverse(int ammountOfSteps, boolean goBackToStart)
     {
-        String reverseRichting = richting;
+        //* Teller voor while loop.
+        int hoeVaakTerug;
         
-        //* Wat elke case inhoudt, staat boverin de klasse 
-        switch (richting) {
-            case "R": reverseRichting = "L";
-                break;
-            case "L": reverseRichting = "R";
-                break;
-            case "V": reverseRichting = "A";
-                break;
-            case "A": reverseRichting = "V";
-                break;
-            case "VR": reverseRichting = "VL";
-                break;
-            case "VL": reverseRichting = "VR";
-                break;
-            case "AR": reverseRichting = "AL";
-                break;
-            case "AL": reverseRichting = "AR";
-                break;
-                  
-        }
-        return reverseRichting;                
-     }
-           
+        //* 1 stap of terug naar start
+        if (goBackToStart)
+        {   
+            hoeVaakTerug = lijstMetTaken.size();
+        } 
+        else { hoeVaakTerug = ammountOfSteps; }
+        
+        for(int x = 0; x < hoeVaakTerug; x++)
+        {
+            //* Laatste pad was String ('L','R', etc...)
+            if (lijstMetTaken.get(lijstMetTaken.size() -1) instanceof String)
+            {
 
-    public static String goReverse()
-    {
-        /* Omgekeerde richting bepalen */
-            String reverse = lijstMetTaken.get(lijstMetTaken.size() -1);
-            reverse = calcReverse(reverse);
-        /* Omgekeerd, dus laatste entry in ArrayList weghalen */
-            lijstMetTaken.remove(lijstMetTaken.size() -1);
-            //* Ga richting: reverse
-            
-        return reverse;
+                String richting  = lijstMetTaken.get(lijstMetTaken.size() -1).toString();
+                //* Methodes invoegen
+                switch (richting) {
+                    //* Signaal sturen voor 'andere richting'
+                    case "R": ; 
+                        break;
+                    case "L": ;
+                        break;
+                    case "V": ;
+                        break;
+                    case "A": ;
+                        break;
+                    case "VR": ;
+                        break;
+                    case "VL": ;
+                        break;
+                    case "AR": ;
+                        break;
+                    case "AL": ;
+                        break;
+                    default: ;               
+                }            
+            }
+            //* Als richting in graden aangegeven is.
+            else if (lijstMetTaken.get(lijstMetTaken.size() -1) instanceof Integer)
+            {
+                int richting     =  Integer.parseInt((lijstMetTaken.get(lijstMetTaken.size() -1)).toString());
+                //* Signaal sturen voor graden draai
+            }
+
+             /* Laatste entry in ArrayList weghalen, is ongedaan gemaakt */
+                lijstMetTaken.remove(lijstMetTaken.size() -1);
+                //* Ga richting: reverse           
+        }       
     }
     
-
 }
+   
