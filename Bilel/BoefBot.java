@@ -20,7 +20,6 @@ public class BoefBot {
      * @param args the command line arguments
      */
     static mainFrame applicationFrame = new mainFrame();
-    static Overons   overOns          = new Overons();
         
     BoefBot()
     {
@@ -32,11 +31,6 @@ public class BoefBot {
         applicationFrame.dispose();          
         applicationFrame.setVisible(true);
         
-    }
-    
-    public static void openOverOns()
-    {
-        overOns.setVisible(true);
     }
     
     public static FileReader openFile(String bestandsLocatie)

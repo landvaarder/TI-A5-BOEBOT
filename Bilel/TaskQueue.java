@@ -2,17 +2,13 @@ package boefbot;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author SuperMachine
- */
 public class TaskQueue {
     
     //* Codes voor bewegingen:
-    //* R: Rechts           L: Links
-    //* O: Achteruit        V: Vooruit
-    //* VR: Vooruit Rechts  VL: Vooruit Links
-    //* 
+    //* R: Rechts               L: Links
+    //* O: Achteruit            V: Vooruit
+    //* VR: Vooruit Rechts      VL: Vooruit Links
+    //* AR: Achteruit Rechts    AL: Achteruit Links
     
     static ArrayList<String> lijstMetTaken;
     
