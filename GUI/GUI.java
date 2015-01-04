@@ -28,6 +28,11 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextPane;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.border.LineBorder;
+
+
 /**
  * @author: Tim Schijvenaars
  * @version 1.0
@@ -65,8 +70,10 @@ public class GUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setEnabled(false);
+		frame.getContentPane().setFont(new Font("Arial", Font.PLAIN, 13));
 		frame.getContentPane().setBackground(Color.LIGHT_GRAY);
-		frame.setBounds(100, 100, 530, 513);
+		frame.setBounds(100, 100, 532, 513);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menubar = new JMenuBar();
@@ -120,21 +127,69 @@ public class GUI {
         //______________________________________________________________________________________________________________________
 		
 		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		
 		JLabel lblManualMovement = new JLabel("Manual Movement");
 		lblManualMovement.setFont(new Font("Arial", Font.PLAIN, 13));
 		GridBagLayout gbl_layeredPane = new GridBagLayout();
 		gbl_layeredPane.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_layeredPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+		gbl_layeredPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_layeredPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_layeredPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_layeredPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		layeredPane.setLayout(gbl_layeredPane);
+		
+		JLayeredPane layeredPane_1 = new JLayeredPane();
+		layeredPane_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		
+		JLabel lblAddRoute = new JLabel("Add to route");
+		lblAddRoute.setFont(new Font("Arial", Font.PLAIN, 13));
+		
+		JTextPane textPane = new JTextPane();
+		
+		JLabel lblQueue = new JLabel("Queue");
+		lblQueue.setFont(new Font("Arial", Font.PLAIN, 13));
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblQueue)
+						.addComponent(textPane, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE))
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addComponent(lblAddRoute)
+							.addComponent(layeredPane_1, GroupLayout.PREFERRED_SIZE, 298, Short.MAX_VALUE))
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addComponent(lblManualMovement)
+							.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 290, Short.MAX_VALUE)))
+					.addContainerGap())
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(23)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblAddRoute)
+						.addComponent(lblQueue))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(layeredPane_1, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(lblManualMovement)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 159, Short.MAX_VALUE))
+						.addComponent(textPane, GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
+					.addContainerGap())
+		);
 		
 		JButton btnForward = new JButton("Forward"); //Naar voren rijden
 		GridBagConstraints gbc_btnForward = new GridBagConstraints();
 		gbc_btnForward.insets = new Insets(0, 0, 5, 5);
 		gbc_btnForward.gridx = 3;
-		gbc_btnForward.gridy = 0;
+		gbc_btnForward.gridy = 1;
 		layeredPane.add(btnForward, gbc_btnForward);
 		btnForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -144,8 +199,8 @@ public class GUI {
 		JButton btnLeft = new JButton("Left"); //Naar links rijden
 		GridBagConstraints gbc_btnLeft = new GridBagConstraints();
 		gbc_btnLeft.insets = new Insets(0, 0, 5, 5);
-		gbc_btnLeft.gridx = 1;
-		gbc_btnLeft.gridy = 2;
+		gbc_btnLeft.gridx = 2;
+		gbc_btnLeft.gridy = 3;
 		layeredPane.add(btnLeft, gbc_btnLeft);
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -156,7 +211,7 @@ public class GUI {
 		GridBagConstraints gbc_btnStop = new GridBagConstraints();
 		gbc_btnStop.insets = new Insets(0, 0, 5, 5);
 		gbc_btnStop.gridx = 3;
-		gbc_btnStop.gridy = 2;
+		gbc_btnStop.gridy = 3;
 		layeredPane.add(btnStop, gbc_btnStop);
 		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -166,8 +221,8 @@ public class GUI {
 		JButton btnRight = new JButton("Right"); //Naar rechts rijden
 		GridBagConstraints gbc_btnRight = new GridBagConstraints();
 		gbc_btnRight.insets = new Insets(0, 0, 5, 5);
-		gbc_btnRight.gridx = 5;
-		gbc_btnRight.gridy = 2;
+		gbc_btnRight.gridx = 4;
+		gbc_btnRight.gridy = 3;
 		layeredPane.add(btnRight, gbc_btnRight);
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -178,7 +233,7 @@ public class GUI {
 		GridBagConstraints gbc_btnBackwards = new GridBagConstraints();
 		gbc_btnBackwards.insets = new Insets(0, 0, 0, 5);
 		gbc_btnBackwards.gridx = 3;
-		gbc_btnBackwards.gridy = 4;
+		gbc_btnBackwards.gridy = 5;
 		layeredPane.add(btnBackwards, gbc_btnBackwards);
 		btnBackwards.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -186,41 +241,7 @@ public class GUI {
 		});
 		
 		//______________________________________________________________________________________________________________________
-		JLayeredPane layeredPane_1 = new JLayeredPane();
 		
-		JLabel lblAddRoute = new JLabel("Add to route");
-		lblAddRoute.setFont(new Font("Arial", Font.PLAIN, 13));
-		
-		JTextPane textPane = new JTextPane();
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(textPane, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblAddRoute)
-						.addComponent(lblManualMovement)
-						.addComponent(layeredPane_1, GroupLayout.PREFERRED_SIZE, 284, GroupLayout.PREFERRED_SIZE)
-						.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 282, GroupLayout.PREFERRED_SIZE))
-					.addGap(207))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addGap(23)
-					.addComponent(lblAddRoute)
-					.addGap(18)
-					.addComponent(layeredPane_1, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(lblManualMovement)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(textPane, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-						.addComponent(layeredPane))
-					.addContainerGap())
-		);
 		GridBagLayout gbl_layeredPane_1 = new GridBagLayout();
 		gbl_layeredPane_1.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_layeredPane_1.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
