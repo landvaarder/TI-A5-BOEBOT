@@ -6,7 +6,7 @@ public class TaskQueue {
     
     //* Codes voor bewegingen:
     //* R: Rechts               L: Links
-    //* O: Achteruit            V: Vooruit
+    //* B: Achteruit            F: Vooruit
     
     static ArrayList<String> lijstMetTaken = new ArrayList<>();   
     
@@ -69,9 +69,9 @@ public class TaskQueue {
                 break;
             case "L": ;     //* Ga Rechts
                 break;
-            case "V": ;
+            case "F": ;
                 break;
-            case "A": ;
+            case "B": ;
                 break;
         }
     }
@@ -88,7 +88,7 @@ public class TaskQueue {
             //* pivot(Links, 
         }
         
-        else if (reverseRichtingChar.equals("L"))
+        else if (reverseRichtingChar.equals("L"x))
         {
             //* 
         }
