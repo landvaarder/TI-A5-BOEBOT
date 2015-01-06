@@ -365,6 +365,18 @@ public class GUI {
         gbc_btnBackwards_1.gridx = 2;
         gbc_btnBackwards_1.gridy = 4;
         layeredPane_1.add(btnBackwards_1, gbc_btnBackwards_1);
+        
+        JButton btnForward_1 = new JButton("Forward");
+        btnForward_1.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    communicate.writeString("F");
+                }
+            });
+		GridBagConstraints gbc_btnForward_1 = new GridBagConstraints();
+		gbc_btnForward_1.insets = new Insets(0, 0, 5, 5);
+		gbc_btnForward_1.gridx = 4;
+		gbc_btnForward_1.gridy = 4;
+		layeredPane_1.add(btnForward_1, gbc_btnForward_1);
 
         JButton btnDeleteLast = new JButton("Delete last");//Verwijder laatste commando
         btnDeleteLast.addActionListener(new ActionListener() {
