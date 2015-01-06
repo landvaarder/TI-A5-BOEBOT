@@ -5,36 +5,14 @@ import java.awt.event.*;
 import java.awt.EventQueue;
 import java.lang.*;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import java.awt.GridLayout;
-import javax.swing.JPanel;
-import javax.swing.JInternalFrame;
-import java.awt.FlowLayout;
-import javax.swing.JButton;
-import java.awt.BorderLayout;
-import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JLayeredPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.BoxLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JTextPane;
-import java.awt.Color;
-import java.awt.Font;
 import javax.swing.border.LineBorder;
 
 /**
- * @author: Tim Schijvenaars
- * @version 1.0
+ * @author: Tim Schijvenaars 
+ * edited by: je moeder 
+ * @version 1.7
  */
 
 public class GUI {
@@ -42,9 +20,11 @@ public class GUI {
     private JFrame frame;
     private ComWriter communicate;
     private String routeCode;
-    private JTextPane textPane;
     private int lastEntry;
     private JLabel lblTextboef;
+    private JTextArea txtArea;
+    private String textRoute;
+    private int lastEntryLength;
 
     /**
      * Launch the application.
@@ -67,6 +47,7 @@ public class GUI {
      */
     public GUI() {
         routeCode = "";
+        textRoute = "";
         lastEntry = 0;
         initialize();
     }
@@ -177,64 +158,62 @@ public class GUI {
         JLabel lblAddRoute = new JLabel("Add to route");
         lblAddRoute.setFont(new Font("Arial", Font.PLAIN, 13));
 
-        textPane = new JTextPane();
-
         JLabel lblQueue = new JLabel("Queue");
         lblQueue.setFont(new Font("Arial", Font.PLAIN, 13));
 
         JLabel lblCurrentMode = new JLabel("Current mode: "); //State label
 
         lblTextboef = new JLabel();
-		
-		JTextArea txtArea = new JTextArea();
-		txtArea.setEditable(false);
-		txtArea.setBackground(SystemColor.controlHighlight);
-		txtArea.setText("oajrpofij \r\naopirjgpoaiejr\r\neotibjprj\r\npoejitvpj\r\noqe\r\nroijoebj\r\n");
-		
+
+        txtArea = new JTextArea();
+        txtArea.setEditable(false);
+        txtArea.setBackground(SystemColor.controlHighlight);
+        txtArea.setText("");
+
         GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblQueue)
-								.addComponent(txtArea, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE))
-							.addGap(11)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(layeredPane_1, 0, 0, Short.MAX_VALUE)
-								.addComponent(lblAddRoute)
-								.addComponent(lblManualMovement)
-								.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 252, Short.MAX_VALUE)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblCurrentMode)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblTextboef, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(155, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addGap(23)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblAddRoute)
-						.addComponent(lblQueue))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(layeredPane_1, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(lblManualMovement)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE))
-						.addComponent(txtArea, GroupLayout.PREFERRED_SIZE, 402, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblCurrentMode)
-						.addComponent(lblTextboef))
-					.addContainerGap(55, Short.MAX_VALUE))
-		);
+        groupLayout.setHorizontalGroup(
+            groupLayout.createParallelGroup(Alignment.LEADING)
+            .addGroup(groupLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                    .addGroup(groupLayout.createSequentialGroup()
+                        .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                            .addComponent(lblQueue)
+                            .addComponent(txtArea, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE))
+                        .addGap(11)
+                        .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+                            .addComponent(layeredPane_1, 0, 0, Short.MAX_VALUE)
+                            .addComponent(lblAddRoute)
+                            .addComponent(lblManualMovement)
+                            .addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 252, Short.MAX_VALUE)))
+                    .addGroup(groupLayout.createSequentialGroup()
+                        .addComponent(lblCurrentMode)
+                        .addPreferredGap(ComponentPlacement.UNRELATED)
+                        .addComponent(lblTextboef, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(155, Short.MAX_VALUE))
+        );
+        groupLayout.setVerticalGroup(
+            groupLayout.createParallelGroup(Alignment.TRAILING)
+            .addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+                .addGap(23)
+                .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+                    .addComponent(lblAddRoute)
+                    .addComponent(lblQueue))
+                .addPreferredGap(ComponentPlacement.UNRELATED)
+                .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                    .addGroup(groupLayout.createSequentialGroup()
+                        .addComponent(layeredPane_1, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
+                        .addGap(18)
+                        .addComponent(lblManualMovement)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtArea, GroupLayout.PREFERRED_SIZE, 402, GroupLayout.PREFERRED_SIZE))
+                .addGap(18)
+                .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+                    .addComponent(lblCurrentMode)
+                    .addComponent(lblTextboef))
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
 
         JButton btnForward = new JButton("Forward"); //Naar voren rijden
         GridBagConstraints gbc_btnForward = new GridBagConstraints();
@@ -380,7 +359,7 @@ public class GUI {
         JButton btnBackwards_1 = new JButton("Send");//Stuur route
         btnBackwards_1.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    sendRouteCode();
+                    sendRouteCode();                   
                 }
             });
         GridBagConstraints gbc_btnBackwards_1 = new GridBagConstraints();
@@ -388,18 +367,6 @@ public class GUI {
         gbc_btnBackwards_1.gridx = 2;
         gbc_btnBackwards_1.gridy = 4;
         layeredPane_1.add(btnBackwards_1, gbc_btnBackwards_1);
-        
-        JButton btnForward_1 = new JButton("Forward");
-        btnForward_1.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    communicate.writeString("F");
-                }
-            });
-		GridBagConstraints gbc_btnForward_1 = new GridBagConstraints();
-		gbc_btnForward_1.insets = new Insets(0, 0, 5, 5);
-		gbc_btnForward_1.gridx = 4;
-		gbc_btnForward_1.gridy = 4;
-		layeredPane_1.add(btnForward_1, gbc_btnForward_1);
 
         JButton btnForward_1 = new JButton("Forward"); //Vooruit
         btnForward_1.addActionListener(new ActionListener() {
@@ -480,28 +447,44 @@ public class GUI {
         for(int i = 0; i < turn; i++) {
             routeCode += "F";
         }
-        routeCode += direction; 
-        textPane.setText(routeCode);
+        routeCode += direction;
+        String turnText = (turn+1)+"e afslag "+direction + "\n";
+        lastEntryLength = turnText.length();
+        textRoute += turnText;        
+        txtArea.setText(textRoute);
         lastEntry = turn++;
     }
 
     private void sendRouteCode() {
-        if(routeCode != "")
+        if(routeCode != "") {
             communicate.writeString(routeCode);
+            try {
+                Thread.sleep(1000);                 //1000 milliseconds is one second.
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+            communicate.writeString("1");
+        }	
         else
             JOptionPane.showMessageDialog(frame,"No directions entered.\nPlease enter at least one direction.","Error",JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void delateAllRouteEntrys() {
-        if(routeCode != "")
+        if(routeCode != "") {
             routeCode = "";
+            txtArea.setText("");
+            textRoute = "";
+        }
         else
             JOptionPane.showMessageDialog(frame,"No entrys to remove.","Error",JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void deleteLastRouteEntry() {
-        if(lastEntry != 0 )
+        if(lastEntry != 0 ) {
             routeCode = routeCode.substring(0,routeCode.length()-lastEntry-1);
+            textRoute = textRoute.substring(0,textRoute.length()-lastEntryLength);
+            txtArea.setText(textRoute);
+        }
         else
             JOptionPane.showMessageDialog(frame,"No entry to remove.","Error",JOptionPane.INFORMATION_MESSAGE);
     }
