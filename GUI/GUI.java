@@ -41,6 +41,9 @@ public class GUI {
 
     private JFrame frame;
     private ComWriter communicate;
+    private String routeCode;
+    private JTextPane textPane;
+    private int lastEntry;
 
     /**
      * Launch the application.
@@ -62,6 +65,8 @@ public class GUI {
      * Create the application.
      */
     public GUI() {
+        routeCode = "";
+        lastEntry = 0;
         initialize();
     }
 
@@ -76,7 +81,6 @@ public class GUI {
         frame.setBounds(100, 100, 650, 605);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        
         JMenuBar menubar = new JMenuBar();
         frame.setJMenuBar(menubar);
         //______________________________________________________________________________________________________________________
@@ -106,7 +110,9 @@ public class GUI {
 
         item = new JMenuItem("Quit");
         item.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) { quit(); }
+                public void actionPerformed(ActionEvent e) { 
+                    quit(); 
+                }
             });
         menu.add(item);
 
@@ -116,21 +122,24 @@ public class GUI {
 
         item = new JMenuItem("Remotecontrol Mode");
         item.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) { communicate.writeString("2");
+                public void actionPerformed(ActionEvent e) { 
+                    communicate.writeString("2");
                 }
             });
         menu.add(item);
 
         item = new JMenuItem("Linefollow Mode");
         item.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) { communicate.writeString("1");
+                public void actionPerformed(ActionEvent e) { 
+                    communicate.writeString("1");
                 }
             });
         menu.add(item);
 
         item = new JMenuItem("Collisiondetection Mode");
         item.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {  communicate.writeString("0");
+                public void actionPerformed(ActionEvent e) {  
+                    communicate.writeString("0");
                 }
             });
         menu.add(item);        
@@ -141,7 +150,9 @@ public class GUI {
 
         item = new JMenuItem("About BoefBot...");
         item.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) { showAbout(); }
+                public void actionPerformed(ActionEvent e) { 
+                    showAbout(); 
+                }
             });
         menu.add(item);
 
@@ -165,59 +176,59 @@ public class GUI {
         JLabel lblAddRoute = new JLabel("Add to route");
         lblAddRoute.setFont(new Font("Arial", Font.PLAIN, 13));
 
-        JTextPane textPane = new JTextPane();
+        textPane = new JTextPane();
 
         JLabel lblQueue = new JLabel("Queue");
         lblQueue.setFont(new Font("Arial", Font.PLAIN, 13));
-        
+
         JLabel lblCurrentMode = new JLabel("Current mode: "); //State label
-		
-		JLabel lblTextboef = new JLabel(showState());
+
+        JLabel lblTextboef = new JLabel(showState());
         GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblQueue)
-								.addComponent(textPane, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE))
-							.addGap(10)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(layeredPane_1, 0, 0, Short.MAX_VALUE)
-								.addComponent(lblAddRoute)
-								.addComponent(lblManualMovement)
-								.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 252, Short.MAX_VALUE)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblCurrentMode)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblTextboef, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(155, Short.MAX_VALUE))
-		);
-		
+        groupLayout.setHorizontalGroup(
+            groupLayout.createParallelGroup(Alignment.LEADING)
+            .addGroup(groupLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                    .addGroup(groupLayout.createSequentialGroup()
+                        .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+                            .addComponent(lblQueue)
+                            .addComponent(textPane, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE))
+                        .addGap(10)
+                        .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+                            .addComponent(layeredPane_1, 0, 0, Short.MAX_VALUE)
+                            .addComponent(lblAddRoute)
+                            .addComponent(lblManualMovement)
+                            .addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 252, Short.MAX_VALUE)))
+                    .addGroup(groupLayout.createSequentialGroup()
+                        .addComponent(lblCurrentMode)
+                        .addPreferredGap(ComponentPlacement.UNRELATED)
+                        .addComponent(lblTextboef, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(155, Short.MAX_VALUE))
+        );
+
         groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addGap(23)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblAddRoute)
-						.addComponent(lblQueue))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(layeredPane_1, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(lblManualMovement)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE))
-						.addComponent(textPane))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblCurrentMode)
-						.addComponent(lblTextboef))
-					.addContainerGap(55, Short.MAX_VALUE))
-		);
+            groupLayout.createParallelGroup(Alignment.TRAILING)
+            .addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+                .addGap(23)
+                .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+                    .addComponent(lblAddRoute)
+                    .addComponent(lblQueue))
+                .addPreferredGap(ComponentPlacement.UNRELATED)
+                .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+                    .addGroup(groupLayout.createSequentialGroup()
+                        .addComponent(layeredPane_1, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
+                        .addGap(18)
+                        .addComponent(lblManualMovement)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textPane))
+                .addPreferredGap(ComponentPlacement.UNRELATED)
+                .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+                    .addComponent(lblCurrentMode)
+                    .addComponent(lblTextboef))
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
 
         JButton btnForward = new JButton("Forward"); //Naar voren rijden
         GridBagConstraints gbc_btnForward = new GridBagConstraints();
@@ -291,6 +302,7 @@ public class GUI {
         JButton btnFirstLeft = new JButton("First left");//Eerste links
         btnFirstLeft.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    addDirections(0,'L');
                 }
             });
         GridBagConstraints gbc_btnFirstLeft = new GridBagConstraints();
@@ -302,6 +314,7 @@ public class GUI {
         JButton btnFirstRight = new JButton("First Right");//Eerste rechts
         btnFirstRight.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    addDirections(0,'R');
                 }
             });
         GridBagConstraints gbc_btnFirstRight = new GridBagConstraints();
@@ -313,6 +326,7 @@ public class GUI {
         JButton btnSecondLeft = new JButton("Second left");//Tweede links
         btnSecondLeft.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    addDirections(1,'L');
                 }
             });
         GridBagConstraints gbc_btnSecondLeft = new GridBagConstraints();
@@ -324,6 +338,7 @@ public class GUI {
         JButton button = new JButton("Second right");//Tweede rechts
         button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    addDirections(1,'R');
                 }
             });
         GridBagConstraints gbc_button = new GridBagConstraints();
@@ -335,17 +350,19 @@ public class GUI {
         JButton btnThirdLeft = new JButton("Third left");//Derde links
         btnThirdLeft.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    addDirections(2,'L');
                 }
             });
         GridBagConstraints gbc_btnThirdLeft = new GridBagConstraints();
         gbc_btnThirdLeft.insets = new Insets(0, 0, 5, 5);
         gbc_btnThirdLeft.gridx = 2;
         gbc_btnThirdLeft.gridy = 2;
-        layeredPane_1.add(btnThirdLeft, gbc_btnThirdLeft);
+        layeredPane_1   .add(btnThirdLeft, gbc_btnThirdLeft);
 
         JButton btnThirdRight = new JButton("Third right");//Derde rechts
         btnThirdRight.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    addDirections(2,'R');
                 }
             });
         GridBagConstraints gbc_btnThirdRight = new GridBagConstraints();
@@ -354,10 +371,10 @@ public class GUI {
         gbc_btnThirdRight.gridy = 2;
         layeredPane_1.add(btnThirdRight, gbc_btnThirdRight);
 
-        JButton btnBackwards_1 = new JButton("Send");//Achteruit
+        JButton btnBackwards_1 = new JButton("Send");//Stuur route
         btnBackwards_1.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    communicate.writeString("B");
+                    sendRouteCode();
                 }
             });
         GridBagConstraints gbc_btnBackwards_1 = new GridBagConstraints();
@@ -378,9 +395,22 @@ public class GUI {
 		gbc_btnForward_1.gridy = 4;
 		layeredPane_1.add(btnForward_1, gbc_btnForward_1);
 
+        JButton btnForward_1 = new JButton("Forward"); //Vooruit
+        btnForward_1.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    addDirections(0,'F');           
+                }
+            });
+        GridBagConstraints gbc_btnForward_1 = new GridBagConstraints();
+        gbc_btnForward_1.insets = new Insets(0, 0, 5, 5);
+        gbc_btnForward_1.gridx = 4;
+        gbc_btnForward_1.gridy = 4;
+        layeredPane_1.add(btnForward_1, gbc_btnForward_1);
+
         JButton btnDeleteLast = new JButton("Delete last");//Verwijder laatste commando
         btnDeleteLast.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    deleteLastRouteEntry();
                 }
             });
         GridBagConstraints gbc_btnDeleteLast = new GridBagConstraints();
@@ -392,6 +422,7 @@ public class GUI {
         JButton btnDeleteAll = new JButton("Delete all");//Verwijder alle commando's
         btnDeleteAll.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    delateAllRouteEntrys();
                 }
             });
         GridBagConstraints gbc_btnDeleteAll = new GridBagConstraints();
@@ -434,9 +465,38 @@ public class GUI {
         else 
             JOptionPane.showMessageDialog(frame,"Not connected to the boebot","Error",JOptionPane.INFORMATION_MESSAGE); 
     }
-    
+
     private String showState(){
-        return "Boef1234Boef";
+        return "Boefrewrew";
     }
 
+    private void addDirections(int turn, char direction) { //0 - direct, 1 - second, 2 - thirth
+        for(int i = 0; i < turn; i++) {
+            routeCode += "F";
+        }
+        routeCode += direction; 
+        textPane.setText(routeCode);
+        lastEntry = turn++;
+    }
+
+    private void sendRouteCode() {
+        if(routeCode != "")
+            communicate.writeString(routeCode);
+        else
+            JOptionPane.showMessageDialog(frame,"No directions entered.\nPlease enter at least one direction.","Error",JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void delateAllRouteEntrys() {
+        if(routeCode != "")
+            routeCode = "";
+        else
+            JOptionPane.showMessageDialog(frame,"No entrys to remove.","Error",JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void deleteLastRouteEntry() {
+        if(lastEntry != 0 )
+            routeCode = routeCode.substring(0,routeCode.length()-lastEntry-1);
+        else
+            JOptionPane.showMessageDialog(frame,"No entry to remove.","Error",JOptionPane.INFORMATION_MESSAGE);
+    }
 }
