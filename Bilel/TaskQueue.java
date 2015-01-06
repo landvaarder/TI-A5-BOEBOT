@@ -12,7 +12,6 @@ public class TaskQueue {
     
     //*
     TaskQueue (){
-        
     }
     
     public static void resetQueue()
@@ -88,7 +87,7 @@ public class TaskQueue {
             //* pivot(Links, 
         }
         
-        else if (reverseRichtingChar.equals("L"x))
+        else if (reverseRichtingChar.equals("L"))
         {
             //* 
         }

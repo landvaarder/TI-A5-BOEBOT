@@ -6,7 +6,8 @@ import javax.comm.*;
 
 public class BTController
 {
-	public          String                  port;
+	public          int                     port;
+        public          String                  COMport;
 	public          boolean                 portInitialised;
         
         public          SerialPort              serialPort;
@@ -15,30 +16,40 @@ public class BTController
         public          String                  messageIn;
         public          String                  messageOut;
         
-        public          InputStream             inputStream;        
-        public          OutputStream            outstream;
-	
+        //* Zender en Ontvanger instanties aanmaken.
+        BTSender sender           = new BTSender(3);
+        BTReceiver receiver       = new BTReceiver(3);
+        
 	BTController(int port){
-		this.port 			= "COM"+ port;
+                this.port                       = port;
+		this.COMport 			= "COM"+ port;
 		this.portInitialised            = false;
-	}
-	
-        //* Port initialiseren
-	public void InitPort()
-	{		
+      
                 try
 		{
-                    portId = CommPortIdentifier.getPortIdentifier(this.port);
-                    if (!(portId == null))
-                    {
-                        portInitialised = true;
-                    }
+                    portId = CommPortIdentifier.getPortIdentifier(this.COMport);
+                        if (!(portId == null))
+                        {
+                            portInitialised = true;
+                        }
 		}
 		catch (NoSuchPortException e)
 		{
 			System.out.println("No port found on " + port + ", please try again");
-		}              
+		}    
 	}
+	
+        public void StreamIn(String message)
+        {
+            byte[] sendMessage = StringToBytes(message);
+            sender.sendMessage(sendMessage);
+        }
+        
+        //* Iets naar buiten sturen
+        public void checkStreamOut()
+        {
+            
+        }
         	
         //* String converteren naar char array        
         public byte[] StringToBytes(String message)
@@ -53,30 +64,12 @@ public class BTController
             }
             
             return messageInBytes;     
-        }
-        
-        public void BytesToString(OutputStream out)
-        {
-            this.message += out.toString();        
-        }
-        
-        public void getMessage()
-        {
-            return this.message;
-        }
+        }     
         
         public String getPort()
         {
-            return this.port;
+            return this.COMport;
         }
         
        
-}
-	
-	
-
-
-	
-
-
 }

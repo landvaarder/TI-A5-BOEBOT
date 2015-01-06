@@ -1,29 +1,25 @@
 package boefbot;
 
-import static boefbot.BTController.serialPort;
 import javax.comm.*;
 import java.util.*;
 import java.io.*;
 
 public class BTSender
 {
+        public          OutputStream             outStream;    
+        
+        BTController controller = new BTController(3);
     
-        public static String message;
-     
-        BTSender(String message)
+        BTSender(int port)
         {
-            this.message = message;
+            
         }
         
-        public static void sendCommand(String message)
+        public void sendMessage(byte[] message)
         {
-            
-            String serialPort;
-            
-            
 		try 
 		{ 
-			BTController.outstream = BTController.serialPort.getOutputStream(); 
+			this.outStream = controller.serialPort.getOutputStream(); 
 		} 
                 catch (IOException e) 
                 { 
@@ -31,7 +27,7 @@ public class BTSender
 			
 		try 
 		{ 
-			BTController.outstream.write(message.getBytes()); 		// 
+			outStream.write(message);
 		} 
 		catch (IOException e)
                 { 
