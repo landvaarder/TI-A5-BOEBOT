@@ -44,6 +44,7 @@ public class GUI {
     private String routeCode;
     private JTextPane textPane;
     private int lastEntry;
+    private JLabel lblTextboef;
 
     /**
      * Launch the application.
@@ -183,52 +184,57 @@ public class GUI {
 
         JLabel lblCurrentMode = new JLabel("Current mode: "); //State label
 
-        JLabel lblTextboef = new JLabel(showState());
+        lblTextboef = new JLabel();
+		
+		JTextArea txtArea = new JTextArea();
+		txtArea.setEditable(false);
+		txtArea.setBackground(SystemColor.controlHighlight);
+		txtArea.setText("oajrpofij \r\naopirjgpoaiejr\r\neotibjprj\r\npoejitvpj\r\noqe\r\nroijoebj\r\n");
+		
         GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-        groupLayout.setHorizontalGroup(
-            groupLayout.createParallelGroup(Alignment.LEADING)
-            .addGroup(groupLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                    .addGroup(groupLayout.createSequentialGroup()
-                        .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                            .addComponent(lblQueue)
-                            .addComponent(textPane, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE))
-                        .addGap(10)
-                        .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-                            .addComponent(layeredPane_1, 0, 0, Short.MAX_VALUE)
-                            .addComponent(lblAddRoute)
-                            .addComponent(lblManualMovement)
-                            .addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 252, Short.MAX_VALUE)))
-                    .addGroup(groupLayout.createSequentialGroup()
-                        .addComponent(lblCurrentMode)
-                        .addPreferredGap(ComponentPlacement.UNRELATED)
-                        .addComponent(lblTextboef, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(155, Short.MAX_VALUE))
-        );
-
-        groupLayout.setVerticalGroup(
-            groupLayout.createParallelGroup(Alignment.TRAILING)
-            .addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-                .addGap(23)
-                .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-                    .addComponent(lblAddRoute)
-                    .addComponent(lblQueue))
-                .addPreferredGap(ComponentPlacement.UNRELATED)
-                .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-                    .addGroup(groupLayout.createSequentialGroup()
-                        .addComponent(layeredPane_1, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
-                        .addGap(18)
-                        .addComponent(lblManualMovement)
-                        .addPreferredGap(ComponentPlacement.RELATED)
-                        .addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE))
-                    .addComponent(textPane))
-                .addPreferredGap(ComponentPlacement.UNRELATED)
-                .addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-                    .addComponent(lblCurrentMode)
-                    .addComponent(lblTextboef))
-                .addContainerGap(55, Short.MAX_VALUE))
-        );
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblQueue)
+								.addComponent(txtArea, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE))
+							.addGap(11)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(layeredPane_1, 0, 0, Short.MAX_VALUE)
+								.addComponent(lblAddRoute)
+								.addComponent(lblManualMovement)
+								.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 252, Short.MAX_VALUE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblCurrentMode)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblTextboef, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(155, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGap(23)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblAddRoute)
+						.addComponent(lblQueue))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(layeredPane_1, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(lblManualMovement)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE))
+						.addComponent(txtArea, GroupLayout.PREFERRED_SIZE, 402, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblCurrentMode)
+						.addComponent(lblTextboef))
+					.addContainerGap(55, Short.MAX_VALUE))
+		);
 
         JButton btnForward = new JButton("Forward"); //Naar voren rijden
         GridBagConstraints gbc_btnForward = new GridBagConstraints();
@@ -466,8 +472,8 @@ public class GUI {
             JOptionPane.showMessageDialog(frame,"Not connected to the boebot","Error",JOptionPane.INFORMATION_MESSAGE); 
     }
 
-    private String showState(){
-        return "Boefrewrew";
+    private void showState(String state){
+        lblTextboef.setText(state);
     }
 
     private void addDirections(int turn, char direction) { //0 - direct, 1 - second, 2 - thirth
