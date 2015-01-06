@@ -12,7 +12,7 @@ public class BTSender
     
         BTSender(int port)
         {
-            
+            BTController controller = new BTController(3);            
         }
         
         public void sendMessage(byte[] message)
@@ -31,8 +31,16 @@ public class BTSender
 		} 
 		catch (IOException e)
                 { 
-                    
+                        System.out.println();
                 } 
 
 	}
+        
+        public void StreamIn(String message)
+        {
+            byte[] sendMessage = controller.StringToBytes(message);
+            sendMessage(sendMessage);
+        }
+        
+
 }

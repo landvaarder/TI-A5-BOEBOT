@@ -79,6 +79,11 @@
         </DimensionLayout>
       </Layout>
     </Container>
+    <Component class="javax.swing.JPasswordField" name="jPasswordField1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jPasswordField1"/>
+      </Properties>
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu5">
@@ -235,7 +240,7 @@
               <Component id="jProgressBar1" min="-2" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="428" max="32767" attributes="0"/>
+              <EmptySpace pref="468" max="32767" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -346,7 +351,7 @@
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/boefbot/Pijlen/pijl_links.png"/>
+                  <Image iconType="3" name="/boefbot/Pijlen/pijl_onder.png"/>
                 </Property>
               </Properties>
             </Component>

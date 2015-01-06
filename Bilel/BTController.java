@@ -1,7 +1,7 @@
 package boefbot;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.util.*;
 import javax.comm.*;
 
 public class BTController
@@ -11,7 +11,8 @@ public class BTController
 	public          boolean                 portInitialised;
         
         public          SerialPort              serialPort;
-        public          CommPortIdentifier      portId;         
+        public          CommPortIdentifier      portIdentifier;         
+        public          CommPort                commPort;              
         
         public          String                  messageIn;
         public          String                  messageOut;
@@ -25,30 +26,48 @@ public class BTController
 		this.COMport 			= "COM"+ port;
 		this.portInitialised            = false;
       
-                try
-		{
-                    portId = CommPortIdentifier.getPortIdentifier(this.COMport);
-                        if (!(portId == null))
-                        {
-                            portInitialised = true;
-                        }
-		}
+                try 
+                {
+                portIdentifier = CommPortIdentifier.getPortIdentifier(COMport);    
+                
+                }
 		catch (NoSuchPortException e)
 		{
 			System.out.println("No port found on " + port + ", please try again");
 		}    
-	}
-	
-        public void StreamIn(String message)
-        {
-            byte[] sendMessage = StringToBytes(message);
-            sender.sendMessage(sendMessage);
-        }
+                
+                try
+                {
+                commPort = portIdentifier.open(this.getClass().getName(),2000);
+                } 
+                catch (PortInUseException ex) 
+                {
+                        System.out.println("iets");
+                }
+                
+                
+                if (portIdentifier.isCurrentlyOwned() == true)
+                {
+                    System.out.println("Error: Port is currently in use");
+                }
+                else
+                {
+                    this.portInitialised = true;
+		}
+
+                
+                }
+
         
         //* Iets naar buiten sturen
-        public void checkStreamOut()
+        public void StreamOut()
         {
-            
+           //(new Thread(new SerialWriter(out))).start();
+                SerialReader input = new SerialReader();
+                serialPort.addEventListener(input);
+                serialPort.notifyOnDataAvailable(true);
+                Thread.sleep(3000);
+                out.write("yes".getBytes());   
         }
         	
         //* String converteren naar char array        
