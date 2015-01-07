@@ -6,16 +6,16 @@ import javax.comm.*;
 
 public class BTController
 {
-	public          int                     port;
-        public          String                  COMport;
-	public          boolean                 portInitialised;
+	private          int                     port;
+        public           String                  COMport;
+	private          boolean                 portInitialised;
         
-        public          SerialPort              serialPort;
-        public          CommPortIdentifier      portIdentifier;         
-        public          CommPort                commPort;              
+        public           static                  CommPortIdentifier      portIdentifier;         
+        public           static                  CommPort                commPort; 
+        public           static                  SerialPort              serialPort;
         
-        public          String                  messageIn;
-        public          String                  messageOut;
+        private          String                  messageIn;
+        private          String                  messageOut;
         
         //* Zender en Ontvanger instanties aanmaken.
         BTSender sender           = new BTSender(3);
@@ -25,7 +25,10 @@ public class BTController
                 this.port                       = port;
 		this.COMport 			= "COM"+ port;
 		this.portInitialised            = false;
-      
+        }
+                
+        public void setConnection()
+        {
                 try 
                 {
                 portIdentifier = CommPortIdentifier.getPortIdentifier(COMport);    
@@ -35,16 +38,15 @@ public class BTController
 		{
 			System.out.println("No port found on " + port + ", please try again");
 		}    
-                
+
                 try
                 {
-                commPort = portIdentifier.open(this.getClass().getName(),2000);
+                serialPort = (SerialPort)portIdentifier.open(this.getClass().getName(),2000);
                 } 
                 catch (PortInUseException ex) 
                 {
-                        System.out.println("iets");
-                }
-                
+                        System.out.println(ex);
+                }                
                 
                 if (portIdentifier.isCurrentlyOwned() == true)
                 {
@@ -54,23 +56,21 @@ public class BTController
                 {
                     this.portInitialised = true;
 		}
-
                 
-                }
-
-        
-        //* Iets naar buiten sturen
-        public void StreamOut()
-        {
-           //(new Thread(new SerialWriter(out))).start();
-                SerialReader input = new SerialReader();
-                serialPort.addEventListener(input);
-                serialPort.notifyOnDataAvailable(true);
-                Thread.sleep(3000);
-                out.write("yes".getBytes());   
+                try 
+                {
+                serialPort.setSerialPortParams( 9600,
+                                                serialPort.DATABITS_8,
+                                                serialPort.STOPBITS_1,
+                                                serialPort.PARITY_NONE);
+                } 
+            catch (UnsupportedCommOperationException e) 
+            {
+                System.out.println(e);
+            }                
         }
-        	
-        //* String converteren naar char array        
+
+       //* String converteren naar char array        
         public byte[] StringToBytes(String message)
         {
             //* Array aanmaken om elke ASCII waarde op te slaan
@@ -83,12 +83,19 @@ public class BTController
             }
             
             return messageInBytes;     
-        }     
+        }    
         
         public String getPort()
         {
             return this.COMport;
-        }
+        }          
         
-       
+        public void switchPort(int port)
+        {
+            this.port                       = port;
+            this.COMport 		    = "COM"+ port;
+            this.portInitialised            = false;   
+            
+            setConnection();
+        }
 }

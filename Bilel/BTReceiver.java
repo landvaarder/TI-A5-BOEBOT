@@ -6,58 +6,28 @@ import javax.comm.*;
 
 public class BTReceiver
 {
-    public          InputStream             inStream;
-    static          Thread                  readThread;
-    
-    BTController controller = new BTController(3);
+    private          InputStream             inStream;
+    private          Thread                  readThread;
     
     BTReceiver(int port)
     {
-        BTController controller = new BTController(3);
+        
     }
     
     //* Stream uitlezen en omzetten naar begrijpbare waarde
     public void readStream() {
-        try
-        {
-            controller.serialPort = (SerialPort)controller.portIdentifier.open("JavaGUI", 2000);
-        } 
-        catch (PortInUseException e) 
-        {
-            System.out.println(e);
-        }
-        
+       
         try 
         {
-            inStream = controller.serialPort.getInputStream();
+            inStream = BTController.serialPort.getInputStream();
         } 
         catch (IOException e) 
         {
             System.out.println(e);
         }
-        
+                        
+        BTController.serialPort.notifyOnDataAvailable(true);
 
-	try 
-        {
-            controller.serialPort.addEventListener(SerialPortEventListener);
-	} 
-        catch (TooManyListenersException e) 
-        {
-            System.out.println(e);
-        }
-                
-        controller.serialPort.notifyOnDataAvailable(true);
-        try 
-        {
-                controller.serialPort.setSerialPortParams(9600,
-                controller.serialPort.DATABITS_8,
-                controller.serialPort.STOPBITS_1,
-                controller.serialPort.PARITY_NONE);
-        } 
-        catch (UnsupportedCommOperationException e) 
-        {
-            System.out.println(e);
-        }
         
         /*
         readThread = new Thread(this);

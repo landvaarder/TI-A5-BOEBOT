@@ -17,30 +17,28 @@ public class BTSender
         
         public void sendMessage(byte[] message)
         {
-		try 
-		{ 
-			this.outStream = controller.serialPort.getOutputStream(); 
-		} 
-                catch (IOException e) 
-                { 
-                }							
+            
+            try 
+            { 
+		this.outStream = controller.serialPort.getOutputStream(); 
+            } 
+            catch (IOException e) 
+            { 
+            }							
 			
-		try 
-		{ 
-			outStream.write(message);
-		} 
-		catch (IOException e)
-                { 
-                        System.out.println();
-                } 
-
+            try 
+            { 
+		outStream.write(message);
+            } 
+            catch (IOException e)
+            { 
+                System.out.println();
+            } 
 	}
         
         public void StreamIn(String message)
         {
-            byte[] sendMessage = controller.StringToBytes(message);
-            sendMessage(sendMessage);
+            byte[] messageInBytes = controller.StringToBytes(message);
+            sendMessage(messageInBytes);
         }
-        
-
 }
