@@ -9,6 +9,8 @@ public class BoefBTController {
     BoefBTSend    sendPin       = new BoefBTSend(1);
     BoefBTReceive receivePin    = new BoefBTReceive(1);
     
+    static      Transmission    transmissie  = new Transmission(3,3); //* 3,3 parameters PSUEDO
+    
     int StreamReaderSize = 100;
     
     BoefBTController(int receiver, int sender)
@@ -33,6 +35,7 @@ public class BoefBTController {
             x++;
                 if (x >= StreamReaderSize) 
                 { 
+                    //* Stop wanneer gehele stream is uitgelezen.
                     return; 
                 }
         }

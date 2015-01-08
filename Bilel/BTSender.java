@@ -38,7 +38,7 @@ public class BTSender
         
         public void StreamIn(String message)
         {
-            byte[] messageInBytes = controller.StringToBytes(message);
+            byte[] messageInBytes = BTController.StringToBytes(message);
             sendMessage(messageInBytes);
         }
 }

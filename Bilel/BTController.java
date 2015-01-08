@@ -69,9 +69,43 @@ public class BTController
                 System.out.println(e);
             }                
         }
+        
+        
+        public void sendCommand(String watDoen)
+        {
+            //* Invoer omzetten naar commandCode
+            byte[] commandCode = new byte[1];
+            
+            switch (watDoen)
+            {
+                
+                case "stop":        commandCode[0] = (byte)100;
+                break;
+                case "vooruit":     commandCode[0] = (byte)101;
+                break;
+                case "links":       commandCode[0] = (byte)102;
+                break;
+                case "rechts":      commandCode[0] = (byte)103;
+                break;
+                case "keren":       commandCode[0] = (byte)104;
+                break;  
+                default:            commandCode[0] = (byte)100;   //* Bij foutieve aaroep "stop" code sturen.
+                break;
+            }
+            
+            
+            sender.sendMessage(commandCode);
+        }
+        
+        public static byte[] IntegerToByte(int number)
+        {
+            byte[] bytesArray   =   new byte[1];
+            bytesArray[0]       =   (byte)number;
+            return bytesArray;
+        }
 
        //* String converteren naar char array        
-        public byte[] StringToBytes(String message)
+        public static byte[] StringToBytes(String message)
         {
             //* Array aanmaken om elke ASCII waarde op te slaan
             byte[] messageInBytes = new byte[message.length()];
@@ -83,8 +117,8 @@ public class BTController
             }
             
             return messageInBytes;     
-        }    
-        
+        }
+ 
         public String getPort()
         {
             return this.COMport;
