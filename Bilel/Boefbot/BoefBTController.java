@@ -1,17 +1,16 @@
 package boefbot.Boefbot;
 
-/**
- *
- * @author SuperMachine
- */
+import java.util.ArrayList;
+
 public class BoefBTController {
 
-    BoefBTSend    sendPin       = new BoefBTSend(1);
-    BoefBTReceive receivePin    = new BoefBTReceive(1);
+    static  BoefBTSend    sendPin       = new BoefBTSend(1);
+    static  BoefBTReceive receivePin    = new BoefBTReceive(1);
     
     static      Transmission    transmissie  = new Transmission(3,3); //* 3,3 parameters PSUEDO
-    
-    int StreamReaderSize = 100;
+     
+    //* Task queue array
+    static ArrayList<Integer> taskQueueList = new ArrayList();
     
     BoefBTController(int receiver, int sender)
     {
@@ -19,26 +18,23 @@ public class BoefBTController {
         BoefBTReceive receivePin    = new BoefBTReceive(receiver);
     }
     
-    public void sendData(String commands)
+    public static void sendData(String commands)
     {
         sendPin.sendData(commands);
     }
     
-    public void receiveData()
+    public static void addToTaskQueue(int code)
     {
-        int x = 0;
-        int[] dataReceive = new int[StreamReaderSize];
-        
-        while (receivePin.receiver.byteAvailable())    
-        {
-            dataReceive[x] = receivePin.receiver.receiveByte();
-            x++;
-                if (x >= StreamReaderSize) 
-                { 
-                    //* Stop wanneer gehele stream is uitgelezen.
-                    return; 
-                }
-        }
+        taskQueueList.add(code);
     }
     
+    public static ArrayList<Integer> getTaskQueue()
+    {
+        return taskQueueList;
+    }
+    
+    public static void resetTaskQueue()
+    {
+        taskQueueList = new ArrayList<>();
+    }    
 }

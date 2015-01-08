@@ -79,17 +79,23 @@ public class BTController
             switch (watDoen)
             {
                 
-                case "stop":        commandCode[0] = (byte)100;
+                case "stop":                commandCode[0] = (byte)100;
                 break;
-                case "vooruit":     commandCode[0] = (byte)101;
+                case "vooruit":             commandCode[0] = (byte)101;
                 break;
-                case "links":       commandCode[0] = (byte)102;
+                case "keerlinks":           commandCode[0] = (byte)102;
                 break;
-                case "rechts":      commandCode[0] = (byte)103;
+                case "keerrechts":          commandCode[0] = (byte)103;
                 break;
-                case "keren":       commandCode[0] = (byte)104;
+                case "keerachteruit":       commandCode[0] = (byte)104;
                 break;  
-                default:            commandCode[0] = (byte)100;   //* Bij foutieve aaroep "stop" code sturen.
+                case "links":               commandCode[0] = (byte)105;
+                break;
+                case "rechts":              commandCode[0] = (byte)106;
+                break;               
+                case "achteruit":           commandCode[0] = (byte)107;
+                break;                    
+                default:                    commandCode[0] = (byte)100;   //* Bij foutieve aaroep "stop" code sturen.
                 break;
             }
             

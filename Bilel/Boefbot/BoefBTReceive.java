@@ -10,9 +10,10 @@ public class BoefBTReceive {
      
     static Uart receiver;
     
-    int     direction;              int dataPin;
-    boolean dataInvert;             int baudRate;
-    int     stopBits;
+    int     direction;              int dataPin;            boolean dataInvert;             
+    int     baudRate;               int stopBits;
+    
+    static int StreamReaderSize = 100;
     
     BoefBTReceive(int dataPin)
     {
@@ -32,9 +33,44 @@ public class BoefBTReceive {
     receiver = new Uart(Uart.dirReceive, this.dataPin, this.dataInvert, this.baudRate, this.stopBits);
     }
     
-    public void receiveSingleByte(byte[] code)
+   public static void receiveData(String type)
     {
-        int commandCode = (int)code[0];
+        
+        if (type.equals("single"))
+        {
+            if (receiver.byteAvailable())
+            {
+                receiveSingleByte(receiver.receiveByte());
+            }
+        }
+        else if (type.equals("stream"))
+        {
+            
+        int x = 0;
+        int[] dataReceive = new int[StreamReaderSize];
+        
+        while (receiver.byteAvailable())    
+        {
+            dataReceive[x] = receiver.receiveByte();
+            x++;
+                if (x >= StreamReaderSize) 
+                { 
+                    //* Stop wanneer gehele stream is uitgelezen.
+                    return; 
+                }
+        }
+        
+        //* Stream toevoegen aan taskQueue (voor andere verwerking)
+        for(int received: dataReceive)
+        {
+            BoefBTController.addToTaskQueue(received);
+        }
+        }
+    }
+
+    public static void receiveSingleByte(int code)
+    {
+        int commandCode = code;
         
         switch (commandCode)
         {
@@ -59,11 +95,4 @@ public class BoefBTReceive {
             default: /* Doe niets */ ;
         }
     }
-    
-    public void receiveTaskQueue()
-    {
-        
-    }
-    
-
 }
