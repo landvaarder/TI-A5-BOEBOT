@@ -420,7 +420,7 @@ public class GUI {
     private void showAbout()
     {
         JOptionPane.showMessageDialog(frame, 
-            "Gemaakt door TI-A5:\n\nWesley de Hek, Tim Schijvenaars\nMichaël Schruring, Timothy Verdonck\nSven Withagen en Bilel Bghiel\n\nPeriode 1.2 2014.",
+            "Gemaakt door TI-A5:\n\nWesley de Hek, Tim Schijvenaars\nMichaël Schruring en Bilel Bghiel\n\nPeriode 1.2 2014.",
             "About ImageViewer", 
             JOptionPane.INFORMATION_MESSAGE);
     }
