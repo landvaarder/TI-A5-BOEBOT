@@ -1,4 +1,4 @@
-package boefbot;
+ 
 
 import java.io.*;
 import java.util.*;

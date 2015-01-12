@@ -1,4 +1,4 @@
-package boefbot;
+ 
 
 import javax.comm.*;
 import java.util.*;
@@ -6,7 +6,7 @@ import java.io.*;
 
 public class BTSender
 {
-        public          OutputStream             outStream;    
+        public          OutputStream             outStream;
         
         BTController controller = new BTController(3);
     

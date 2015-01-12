@@ -2,10 +2,6 @@ package boefbot.Boefbot;
 
 import stamp.core.*;
 
-/**
- *
- * @author SuperMachine
- */
 public class BoefBTReceive {
      
     static Uart receiver;
@@ -33,43 +29,42 @@ public class BoefBTReceive {
     receiver = new Uart(Uart.dirReceive, this.dataPin, this.dataInvert, this.baudRate, this.stopBits);
     }
     
-   public static void receiveData(String type)
+    public static void receiveData(String type)
     {
         
         if (type.equals("single"))
         {
             if (receiver.byteAvailable())
             {
-                receiveSingleByte(receiver.receiveByte());
+                processSingleByte(receiver.receiveByte());
             }
         }
         else if (type.equals("stream"))
-        {
-            
-        int x = 0;
-        int[] dataReceive = new int[StreamReaderSize];
-        
-        while (receiver.byteAvailable())    
-        {
-            dataReceive[x] = receiver.receiveByte();
-            x++;
-                if (x >= StreamReaderSize) 
-                { 
-                    //* Stop wanneer gehele stream is uitgelezen.
-                    return; 
-                }
-        }
+        {           
+            int x = 0;
+            int[] dataReceive = new int[StreamReaderSize];
+
+            while (receiver.byteAvailable())    
+            {
+                dataReceive[x] = receiver.receiveByte();
+                x++;
+                    if (x >= StreamReaderSize) 
+                    { 
+                        //* Stop wanneer gehele stream is uitgelezen.
+                        return; 
+                    }
+            }
         
         //* Stream toevoegen aan taskQueue (voor andere verwerking)
-        for(int received: dataReceive)
-        {
-            BoefBTController.addToTaskQueue(received);
-        }
+            for(int received: dataReceive)
+            {
+                BoefBTController.addToTaskQueue(received);
+            }
         }
     }
 
-    public static void receiveSingleByte(int code)
-    {
+    public static void processSingleByte(int code)
+    {        
         int commandCode = code;
         
         switch (commandCode)
@@ -95,4 +90,5 @@ public class BoefBTReceive {
             default: /* Doe niets */ ;
         }
     }
+    
 }

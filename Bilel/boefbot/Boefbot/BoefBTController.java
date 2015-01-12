@@ -18,7 +18,9 @@ public class BoefBTController {
         BoefBTReceive receivePin    = new BoefBTReceive(receiver);
     }
     
-    public static void sendData(String commands)
+    
+    //* Data versturen naar GUI
+    public static void sendData(int commands)
     {
         sendPin.sendData(commands);
     }
@@ -37,4 +39,16 @@ public class BoefBTController {
     {
         taskQueueList = new ArrayList<>();
     }    
+    
+    public static void remoteControl()
+    {
+       //* Wachten op enkele byte (Voor directe besturing)
+        receivePin.receiveData("single");
+    }
+    
+    public static void taskQueueHandler()
+    {
+        //* Wachten op taskQueue
+        receivePin.receiveData("stream");
+    }
 }

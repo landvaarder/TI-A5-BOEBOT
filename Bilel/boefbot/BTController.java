@@ -1,4 +1,4 @@
-package boefbot;
+ 
 
 import java.io.*;
 import java.util.*;
@@ -18,8 +18,9 @@ public class BTController
         private          String                  messageOut;
         
         //* Zender en Ontvanger instanties aanmaken.
-        BTSender sender           = new BTSender(3);
-        BTReceiver receiver       = new BTReceiver(3);
+        BTSender    sender        = new BTSender(3);
+        BTReceiver  receiver      = new BTReceiver(3);
+        TaskQueue   taskqueue     = new TaskQueue();
         
 	BTController(int port){
                 this.port                       = port;
