@@ -1,22 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
  
 
-/**
- *
- * @author SuperMachine
- */
-public class mainFrame extends javax.swing.JFrame {
+import java.util.ArrayList;
 
-    /**
-     * Creates new form mainFrame
-     */
+public class mainFrame extends javax.swing.JFrame {
+    
+    BTController btcontroller = new BTController(3);
+    
     public mainFrame() {
         initComponents();
+        extraComponents();
     }
     
     public void restartApp()
@@ -43,7 +35,6 @@ public class mainFrame extends javax.swing.JFrame {
         jPopupMenu2 = new javax.swing.JPopupMenu();
         jPanel2 = new javax.swing.JPanel();
         jPasswordField1 = new javax.swing.JPasswordField();
-        jProgressBar1 = new javax.swing.JProgressBar();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -52,6 +43,8 @@ public class mainFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -160,49 +153,69 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setText("Modus");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Single", "TaskQueue"}));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jLabel1))))
+                        .addContainerGap()
+                        .addComponent(jLabel8)
+                        .addGap(27, 27, 27)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(80, 80, 80)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(117, 117, 117)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         jLabel6.setText("TaskQueue");
@@ -260,7 +273,7 @@ public class mainFrame extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jMenu5.setText("Applicatie");
@@ -283,6 +296,11 @@ public class mainFrame extends javax.swing.JFrame {
         jMenu2.setText("Profiel");
 
         jMenuItem1.setText("Inladen");
+        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem1MouseClicked(evt);
+            }
+        });
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -291,6 +309,11 @@ public class mainFrame extends javax.swing.JFrame {
         jMenu2.add(jMenuItem1);
 
         jMenuItem2.setText("Opslaan");
+        jMenuItem2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem2MouseClicked(evt);
+            }
+        });
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -313,6 +336,11 @@ public class mainFrame extends javax.swing.JFrame {
         jMenu1.setText("BoefBot");
 
         jMenuItem11.setText("Start");
+        jMenuItem11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem11MouseClicked(evt);
+            }
+        });
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem11ActionPerformed(evt);
@@ -321,6 +349,11 @@ public class mainFrame extends javax.swing.JFrame {
         jMenu1.add(jMenuItem11);
 
         jMenuItem12.setText("Stop");
+        jMenuItem12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem12MouseClicked(evt);
+            }
+        });
         jMenu1.add(jMenuItem12);
 
         jMenuItem3.setText("Reset");
@@ -333,7 +366,12 @@ public class mainFrame extends javax.swing.JFrame {
 
         jMenu7.setText("Modus");
 
-        jMenuItem13.setText("Automatisch");
+        jMenuItem13.setText("Remotecontrol");
+        jMenuItem13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem13MouseClicked(evt);
+            }
+        });
         jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem13ActionPerformed(evt);
@@ -341,10 +379,10 @@ public class mainFrame extends javax.swing.JFrame {
         });
         jMenu7.add(jMenuItem13);
 
-        jMenuItem14.setText("Afstandbediening");
+        jMenuItem14.setText("Linefollowing");
         jMenu7.add(jMenuItem14);
 
-        jMenuItem15.setText("PC");
+        jMenuItem15.setText("Collisiondetection");
         jMenu7.add(jMenuItem15);
 
         jMenu1.add(jMenu7);
@@ -352,6 +390,11 @@ public class mainFrame extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu6.setText("Over");
+        jMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu6MouseClicked(evt);
+            }
+        });
         jMenu6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu6ActionPerformed(evt);
@@ -366,29 +409,34 @@ public class mainFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60))
+                .addGap(112, 112, 112))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(162, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(139, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void extraComponents()
+    {
+
+    }
+    
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -422,23 +470,52 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        if (((String)jComboBox1.getSelectedItem()).equals("Single"))
+        {
+            btcontroller.sendCommand("F", true);
+            return;
+        }
         String nieuweText = jTextArea1.getText() + "Vooruit \n";
         jTextArea1.setText(nieuweText);
+        btcontroller.addTaskQueue("F");
     }//GEN-LAST:event_jLabel2MouseClicked
-
+    
+    private void jTextArea1MouseExited(java.awt.event.MouseEvent evt) {                                       
+        setVisible(false);
+        dispose();
+    }          
+    
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        if (((String)jComboBox1.getSelectedItem()).equals("Single"))
+        {
+            btcontroller.sendCommand("R", true);
+            return;
+        }        
         String nieuweText = jTextArea1.getText() + "Rechts \n";
         jTextArea1.setText(nieuweText);
+        btcontroller.addTaskQueue("R");
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        if (((String)jComboBox1.getSelectedItem()).equals("Single"))
+        {
+            btcontroller.sendCommand("L", true);
+            return;
+        }
         String nieuweText = jTextArea1.getText() + "Links \n";
         jTextArea1.setText(nieuweText);
+        btcontroller.addTaskQueue("L");
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        if (((String)jComboBox1.getSelectedItem()).equals("Single"))
+        {
+            btcontroller.sendCommand("B", true);
+            return;
+        }        
         String nieuweText = jTextArea1.getText() + "Terug \n";
         jTextArea1.setText(nieuweText);
+        btcontroller.addTaskQueue("B");
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -447,22 +524,66 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         jTextArea1.setText("");
+        btcontroller.emptyTaskQueue();
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        // TODO add your handling code here:
+        if (((String)jComboBox1.getSelectedItem()).equals("Single"))
+        {
+            btcontroller.sendCommand("S", true);
+            return;
+        }
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
             
     }//GEN-LAST:event_jButton1MouseClicked
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jMenuItem11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem11MouseClicked
+        btcontroller.setConnection();
+    }//GEN-LAST:event_jMenuItem11MouseClicked
+
+    private void jMenuItem12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem12MouseClicked
+        btcontroller = new BTController(3);
+    }//GEN-LAST:event_jMenuItem12MouseClicked
+
+    private void jMenuItem2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseClicked
+        btcontroller.sendCommand(null, false);
+    }//GEN-LAST:event_jMenuItem2MouseClicked
+
+    private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
+//        javax.swing.JTextArea jTextArea2 = new javax.swing.JTextArea();
+//
+//        jTextArea2.setColumns(20);
+//        jTextArea2.setRows(5);
+//        jTextArea2.setText("Boefbot A6 2014-'15\n\tdoor:\t- Bilel Bghiel\n\t\t- Wesley Hek\n\t\t- Michael ....\n\t\t- Tim Schijvenaars\n\n");
+//        jTextArea2.addMouseListener(new java.awt.event.MouseAdapter() {
+//            public void mouseExited(java.awt.event.MouseEvent evt) {
+//                getContentPane().remove(jTextArea2);
+//            }
+//        });
+//        
+//        jTextArea2.setVisible(true);
+//        layout.add();
+    }//GEN-LAST:event_jMenu6MouseClicked
+
+    private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
+        
+    }//GEN-LAST:event_jMenuItem1MouseClicked
+
+    private void jMenuItem13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem13MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem13MouseClicked
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-      
-        /* Create and display the form */
+    public static void main(String[] args)
+    {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new mainFrame().setVisible(true);
@@ -475,6 +596,7 @@ public class mainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -482,6 +604,7 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -516,7 +639,6 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JPopupMenu jPopupMenu2;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextArea jTextArea1;

@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.params=port
+comment0.target=BTController(int)
+comment1.params=
+comment1.target=void\ setConnection()
+comment2.params=
+comment2.target=java.util.ArrayList\ getTaskqueue()
+comment3.params=item
+comment3.target=void\ addTaskQueue(java.lang.String)
+comment4.params=
+comment4.target=void\ emptyTaskQueue()
+comment5.params=message\ isSingle
+comment5.target=void\ sendCommand(java.lang.String,\ boolean)
+comment6.params=
+comment6.target=java.lang.String\ getPort()
+comment7.params=port
+comment7.target=void\ switchPort(int)
+comment8.params=
+comment8.target=void\ readStream()
+numComments=9
