@@ -20,6 +20,7 @@ public class BTController
         private          Thread                  readThread;        
         
         ArrayList<String> taskqueue = new ArrayList();
+        int buffersize              = 15;
         
         
 	BTController(int port){
@@ -106,11 +107,9 @@ public class BTController
                 }
                 else
                 {
-                    String iets;
                     for (int x = 0; x < taskqueue.size(); x++)
                     {
-                        iets = taskqueue.get(x);
-                        outStream.write(iets.getBytes());
+                        outStream.write(taskqueue.get(x).getBytes());
                     }
                 }
             } 
@@ -134,23 +133,43 @@ public class BTController
             setConnection();
         }
         
-    public void readStream() {
+    public int[] readStream() {
        
+        int[] arrayOfInts = new int[1];
+        
         try 
         {
             inStream = serialPort.getInputStream();
+            serialPort.notifyOnDataAvailable(true);
+            int nextelement = inStream.read();
+            
+            while (nextelement != -1)
+            {
+                   System.arraycopy(arrayOfInts, 0, arrayOfInts, 0, arrayOfInts.length+1);
+                   arrayOfInts[arrayOfInts.length+1] = nextelement;
+            }
         } 
         catch (IOException e) 
         {
             System.out.println(e);
         }
-                        
-        serialPort.notifyOnDataAvailable(true);
-
         
-        /*
-        readThread = new Thread(this);
-        readThread.start();
-                */
+        return arrayOfInts;
+    }
+    
+    public String caseDirection(String directioncode)
+    {
+        switch (directioncode)
+        {
+            case "R":   return "Rechts";
+            case "L":   return "Links";
+            case "F":   return "Vooruit";
+            case "B":   return "Terug";
+            case "S":   return "Stop";
+            case "n":   return null;
+            case "u":   return null;
+            case "l":   return null;
+        }
+        return null;
     }
 }

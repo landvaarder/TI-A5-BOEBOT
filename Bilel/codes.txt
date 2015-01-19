@@ -1,0 +1,12 @@
+sendMessage (APP):
+
+100 = stop.
+101 = vooruit.
+/* keren  */
+102 = linksaf
+103 = rechtsaf
+104 = achteruit
+/* rijden
+105 = links
+106 = rechts
+107 = achteruit

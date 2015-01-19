@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=
+comment0.target=FileController()
+comment1.params=input
+comment1.target=void\ writer(java.lang.String)
+comment2.params=
+comment2.target=char[]\ reader()
+numComments=3
