@@ -32,6 +32,7 @@ target2.editor.x=0
 target2.editor.y=0
 target2.height=50
 target2.name=mainFrame
+target2.naviview.expanded=true
 target2.showInterface=false
 target2.type=ClassTarget
 target2.typeParameters=
