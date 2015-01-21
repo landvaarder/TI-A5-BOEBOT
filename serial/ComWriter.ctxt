@@ -1,8 +1,0 @@
-#BlueJ class context
-comment0.params=
-comment0.target=ComWriter()
-comment1.params=
-comment1.target=void\ initCom()
-comment2.params=tekst
-comment2.target=void\ writeString(java.lang.String)
-numComments=3

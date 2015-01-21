@@ -1,5 +1,10 @@
-import stamp.core.*;
+import stamp.core.CPU;
 
+/*
+ *@author Wesley de Hek
+ *@version 1.0
+ */
+ 
 public class IRSensor {
 
   private IREmitter irEmitter;
@@ -11,14 +16,11 @@ public class IRSensor {
    this.irReciever = new IRReciever(recieverPin);
   }
 
-  public void runIRCollision() {
+  public boolean getCollision(){
    irEmitter.startBeam();
    CPU.delay(5);
    this.collision = irReciever.checkSignal();
    irEmitter.stopBeam();
-  }
-
-  public boolean getCollision(){
    return collision;
   }
 }
